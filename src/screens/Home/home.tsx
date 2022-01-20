@@ -9,7 +9,8 @@ import {
     Container,
     Header,
     HeaderContent,
-    TotalCars
+    TotalCars,
+    CarList,
 } from './home.styles';
 
 const Home = () => {
@@ -41,8 +42,12 @@ const Home = () => {
                     </TotalCars>
                 </HeaderContent>
             </Header>
-            <Car data={CarDataMoc} />
-            <Car data={CarDataMoc} />
+            <CarList 
+                data={[ 1, 2, 3, 4, 5, 6, 7 ]}
+                keyExtractor={item => String(item)}
+                renderItem={({ item }) => <Car data={CarDataMoc} />}
+            />
+            
         </Container>
     );
 }
