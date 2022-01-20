@@ -25,7 +25,9 @@ import {
     Price,
     Accessories,
     About,
+    Footer,
 } from './CarDetails.styles';
+import Button from '../../components/Button';
 
 const CarDetails = () => {
     return (
@@ -66,6 +68,10 @@ const CarDetails = () => {
                 É um belíssimo carro para quem gosta de acelerar.
               </About>
             </Content>
+
+            <Footer>
+              <Button title="Confirmar" color="green" />
+            </Footer>
         </Container>
     );
 }
