@@ -1,6 +1,9 @@
 import React from 'react';
-import Accessory from '../../components/Accessory';
+import { Feather } from '@expo/vector-icons'
+import { RFValue } from 'react-native-responsive-fontsize';
+import { useTheme } from 'styled-components';
 
+import Accessory from '../../components/Accessory';
 import BackButton from '../../components/BackButton';
 import ImageSlider from '../../components/ImageSlider';
 
@@ -24,12 +27,23 @@ import {
     Period,
     Price,
     Accessories,
-    About,
+    RentalPeriod,
+    CalendarIcon,
+    DateInfo,
+    DateTitle,
+    DateValue,
+    RentalPrice,
+    RentalPriceLabel,
+    RentalPriceDetail,
+    RentalPriceQuota,
+    RentalPriceTotal,
     Footer,
-} from './CarDetails.styles';
+} from './SchedulingDetails.styles';
 import Button from '../../components/Button';
 
-const CarDetails = () => {
+const SchedulingDetails = () => {
+    const theme = useTheme();
+
     return (
         <Container>
             <Header>
@@ -62,18 +76,46 @@ const CarDetails = () => {
                 <Accessory name='2 pessoas' icon={peopleSVG}/>
               </Accessories>
 
-              <About>
-                Este é automóvel desportivo. Surgiu do lendário
-                touro de lide indultado na praça Real Maestranza de Sevilla.
-                É um belíssimo carro para quem gosta de acelerar.
-              </About>
+              <RentalPeriod>
+                <CalendarIcon>
+                  <Feather
+                    name='calendar'
+                    size={RFValue(24)}
+                    color={theme.colors.shape}
+                  />
+                </CalendarIcon>
+
+                <DateInfo>
+                  <DateTitle>DE</DateTitle>
+                  <DateValue>18/06/2021</DateValue>
+                </DateInfo>
+
+                <Feather
+                    name='chevron-right'
+                    size={RFValue(10)}
+                    color={theme.colors.text}
+                />
+
+                <DateInfo>
+                  <DateTitle>ATÉ</DateTitle>
+                  <DateValue>18/06/2021</DateValue>
+                </DateInfo>
+              </RentalPeriod>
+
+              <RentalPrice>
+                <RentalPriceLabel>Total</RentalPriceLabel>
+                <RentalPriceDetail>
+                  <RentalPriceQuota>R$ 580 3x diária</RentalPriceQuota>
+                  <RentalPriceTotal>R$ 2.900</RentalPriceTotal>
+                </RentalPriceDetail>
+              </RentalPrice>
             </Content>
 
             <Footer>
-              <Button title="Confirmar" />
+              <Button title="Alugar agora" color={theme.colors.success} />
             </Footer>
         </Container>
     );
 }
 
-export default CarDetails;
+export default SchedulingDetails;

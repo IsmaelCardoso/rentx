@@ -16,6 +16,8 @@ export const Container = styled(RectButton)<IButton>`
   background-color: ${({ color, theme }) =>
     color ? color : theme.colors.main
   };
+
+  border-radius: 5px;
 `
 export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.primary_500};

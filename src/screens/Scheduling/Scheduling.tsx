@@ -13,7 +13,7 @@ import {
   RentalPeriod,
   DateInfo,
   DateTitle,
-  DataValue,
+  DateValue,
   Content,
   Footer,
 } from './Scheduling.styles';
@@ -46,18 +46,18 @@ const Scheduling = () => {
         <RentalPeriod>
           <DateInfo>
             <DateTitle>DE</DateTitle>
-            <DataValue selected={false}>
+            <DateValue selected={false}>
               18/06/2021
-            </DataValue>
+            </DateValue>
           </DateInfo>
 
           <ArrowSvg />
 
           <DateInfo>
             <DateTitle>ATÉ</DateTitle>
-            <DataValue selected={false}>
+            <DateValue selected={false}>
               18/06/2021
-            </DataValue>
+            </DateValue>
           </DateInfo>
         </RentalPeriod>
 

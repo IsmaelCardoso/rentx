@@ -53,7 +53,7 @@ export const DateTitle = styled.Text`
   font-size: ${RFValue(10)}px;
 `;
 
-export const DataValue = styled.Text<IDateValue>`
+export const DateValue = styled.Text<IDateValue>`
   color: ${({ theme }) => theme.colors.shape};
   font-family: ${({ theme }) => theme.fonts.primary_500};
   font-size: ${RFValue(15)}px;
