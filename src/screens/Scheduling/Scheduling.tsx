@@ -17,6 +17,8 @@ import {
   Content,
   Footer,
 } from './Scheduling.styles';
+
+import Calendar from '../../components/Calendar';
 import Button from '../../components/Button';
 
 const Scheduling = () => {
@@ -62,7 +64,7 @@ const Scheduling = () => {
       </Header>
 
       <Content>
-
+        <Calendar />
       </Content>
 
       <Footer>
