@@ -5,12 +5,7 @@ import Accessory from '../../components/Accessory';
 import BackButton from '../../components/BackButton';
 import ImageSlider from '../../components/ImageSlider';
 
-import speedSVG from '../../assets/speed.svg'
-import accelerationSVG from '../../assets/acceleration.svg'
-import forceSVG from '../../assets/force.svg'
-import gasolineSVG from '../../assets/gasoline.svg'
-import exchangeSVG from '../../assets/exchange.svg'
-import peopleSVG from '../../assets/people.svg'
+import getAccessoryIcon from '../../utils/getAccessoryIcon'
 
 import {
     Container,
@@ -41,14 +36,11 @@ const CarDetails = () => {
 
   const { car } = route.params as IParams
   const {
-    id,
     name,
     about,
-    thumbnail,
     rent,
     photos,
     brand,
-    fuel_type,
     accessories,
   } = car;
 
@@ -88,7 +80,7 @@ const CarDetails = () => {
                 <Accessory
                   key={accessory.type}
                   name={accessory.name}
-                  icon={speedSVG}
+                  icon={getAccessoryIcon(accessory.type)}
                 />
               )}
             </Accessories>
