@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native'
 import { StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize'
 
@@ -14,14 +15,20 @@ import {
 } from './home.styles';
 
 const Home = () => {
-    const CarDataMoc = {
-        brand: "Audi",
-        name: "RS 5 Coupé",
-        rent: {
-            period: "ao dia",
-            price: "120",
-        },
-        thumbnail: "https://beta.alpes.one/storage/app/uploads/public/608/ad6/90f/608ad690f418e968296549.png"
+  const navigation = useNavigation();
+
+  const CarDataMock = {
+      brand: "Audi",
+      name: "RS 5 Coupé",
+      rent: {
+          period: "ao dia",
+          price: "120",
+      },
+      thumbnail: "https://beta.alpes.one/storage/app/uploads/public/608/ad6/90f/608ad690f418e968296549.png"
+  }
+
+    function handlerCarDetail() {
+      navigation.navigate('CarDetails');
     }
 
     return (
@@ -42,11 +49,13 @@ const Home = () => {
                     </TotalCars>
                 </HeaderContent>
             </Header>
-            <CarList 
+            <CarList
                 data={[ 1, 2, 3, 4, 5, 6, 7 ]}
                 keyExtractor={item => String(item)}
-                renderItem={({ item }) => <Car data={CarDataMoc} />}
-            />    
+                renderItem={({ item }) =>
+                  <Car data={CarDataMock} onPress={handlerCarDetail} />
+                }
+            />
         </Container>
     );
 }

@@ -1,7 +1,8 @@
 import React from 'react';
+import { RectButtonProps } from 'react-native-gesture-handler';
 import { Container, Title } from './ConfirmButton.styles';
 
-interface IConfirmButton {
+interface IConfirmButton extends RectButtonProps {
   title: string;
 }
 

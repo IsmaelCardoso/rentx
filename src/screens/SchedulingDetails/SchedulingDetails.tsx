@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
@@ -43,11 +44,16 @@ import Button from '../../components/Button';
 
 const SchedulingDetails = () => {
     const theme = useTheme();
+    const navigation = useNavigation();
+
+    const handlerSchedulingComplete = () => {
+      navigation.navigate('SchedulingComplete')
+    }
 
     return (
         <Container>
             <Header>
-              <BackButton onPress={() => {}} />
+              <BackButton onPress={() => navigation.goBack()} />
             </Header>
 
             <CarImageContainer>
@@ -112,7 +118,11 @@ const SchedulingDetails = () => {
             </Content>
 
             <Footer>
-              <Button title="Alugar agora" color={theme.colors.success} />
+              <Button
+                title="Alugar agora"
+                color={theme.colors.success}
+                onPress={handlerSchedulingComplete}
+              />
             </Footer>
         </Container>
     );

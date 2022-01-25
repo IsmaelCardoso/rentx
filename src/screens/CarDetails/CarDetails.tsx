@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native'
 import Accessory from '../../components/Accessory';
 
 import BackButton from '../../components/BackButton';
@@ -30,50 +31,59 @@ import {
 import Button from '../../components/Button';
 
 const CarDetails = () => {
-    return (
-        <Container>
-            <Header>
-              <BackButton onPress={() => {}} />
-            </Header>
+  const navigation = useNavigation();
 
-            <CarImageContainer>
-              <ImageSlider imagesUrl={["https://beta.alpes.one/storage/app/uploads/public/608/ad6/90f/608ad690f418e968296549.png"]} />
-            </CarImageContainer>
+  const handlerConfirmRental = () => {
+    navigation.navigate('Scheduling');
+  }
 
-            <Content>
-              <Details>
-                <Description>
-                    <Brand>Lamborghini</Brand>
-                    <Name>Huracan</Name>
-                </Description>
+  return (
+      <Container>
+          <Header>
+            <BackButton onPress={() => navigation.goBack()} />
+          </Header>
 
-                <Rent>
-                    <Period>Ao dia</Period>
-                    <Price>R$ 500</Price>
-                </Rent>
-              </Details>
+          <CarImageContainer>
+            <ImageSlider imagesUrl={["https://beta.alpes.one/storage/app/uploads/public/608/ad6/90f/608ad690f418e968296549.png"]} />
+          </CarImageContainer>
 
-              <Accessories>
-                <Accessory name='380Km/h' icon={speedSVG}/>
-                <Accessory name='3.2s' icon={accelerationSVG}/>
-                <Accessory name='800 HP' icon={forceSVG}/>
-                <Accessory name='Gasolina' icon={gasolineSVG}/>
-                <Accessory name='Auto' icon={exchangeSVG}/>
-                <Accessory name='2 pessoas' icon={peopleSVG}/>
-              </Accessories>
+          <Content>
+            <Details>
+              <Description>
+                  <Brand>Lamborghini</Brand>
+                  <Name>Huracan</Name>
+              </Description>
 
-              <About>
-                Este é automóvel desportivo. Surgiu do lendário
-                touro de lide indultado na praça Real Maestranza de Sevilla.
-                É um belíssimo carro para quem gosta de acelerar.
-              </About>
-            </Content>
+              <Rent>
+                  <Period>Ao dia</Period>
+                  <Price>R$ 500</Price>
+              </Rent>
+            </Details>
 
-            <Footer>
-              <Button title="Confirmar" />
-            </Footer>
-        </Container>
-    );
+            <Accessories>
+              <Accessory name='380Km/h' icon={speedSVG}/>
+              <Accessory name='3.2s' icon={accelerationSVG}/>
+              <Accessory name='800 HP' icon={forceSVG}/>
+              <Accessory name='Gasolina' icon={gasolineSVG}/>
+              <Accessory name='Auto' icon={exchangeSVG}/>
+              <Accessory name='2 pessoas' icon={peopleSVG}/>
+            </Accessories>
+
+            <About>
+              Este é automóvel desportivo. Surgiu do lendário
+              touro de lide indultado na praça Real Maestranza de Sevilla.
+              É um belíssimo carro para quem gosta de acelerar.
+            </About>
+          </Content>
+
+          <Footer>
+            <Button
+              title="Escolher período de aluguel"
+              onPress={handlerConfirmRental}
+            />
+          </Footer>
+      </Container>
+  );
 }
 
 export default CarDetails;
