@@ -43,89 +43,93 @@ import {
 import Button from '../../components/Button';
 
 const SchedulingDetails = () => {
-    const theme = useTheme();
-    const navigation = useNavigation();
+  const theme = useTheme();
+  const navigation = useNavigation();
 
-    const handlerSchedulingComplete = () => {
-      navigation.navigate('SchedulingComplete')
-    }
+  const handlerSchedulingComplete = () => {
+    navigation.navigate('SchedulingComplete' as never)
+  }
 
-    return (
-        <Container>
-            <Header>
-              <BackButton onPress={() => navigation.goBack()} />
-            </Header>
+  const handlerGoBack = () => {
+    navigation.goBack();
+  }
 
-            <CarImageContainer>
-              <ImageSlider imagesUrl={["https://beta.alpes.one/storage/app/uploads/public/608/ad6/90f/608ad690f418e968296549.png"]} />
-            </CarImageContainer>
+  return (
+    <Container>
+      <Header>
+        <BackButton onPress={handlerGoBack} />
+      </Header>
 
-            <Content>
-              <Details>
-                <Description>
-                    <Brand>Lamborghini</Brand>
-                    <Name>Huracan</Name>
-                </Description>
+      <CarImageContainer>
+        <ImageSlider imagesUrl={["https://beta.alpes.one/storage/app/uploads/public/608/ad6/90f/608ad690f418e968296549.png"]} />
+      </CarImageContainer>
 
-                <Rent>
-                    <Period>Ao dia</Period>
-                    <Price>R$ 500</Price>
-                </Rent>
-              </Details>
+      <Content>
+        <Details>
+          <Description>
+            <Brand>Lamborghini</Brand>
+            <Name>Huracan</Name>
+          </Description>
 
-              <Accessories>
-                <Accessory name='380Km/h' icon={speedSVG}/>
-                <Accessory name='3.2s' icon={accelerationSVG}/>
-                <Accessory name='800 HP' icon={forceSVG}/>
-                <Accessory name='Gasolina' icon={gasolineSVG}/>
-                <Accessory name='Auto' icon={exchangeSVG}/>
-                <Accessory name='2 pessoas' icon={peopleSVG}/>
-              </Accessories>
+          <Rent>
+            <Period>Ao dia</Period>
+            <Price>R$ 500</Price>
+          </Rent>
+        </Details>
 
-              <RentalPeriod>
-                <CalendarIcon>
-                  <Feather
-                    name='calendar'
-                    size={RFValue(24)}
-                    color={theme.colors.shape}
-                  />
-                </CalendarIcon>
+        <Accessories>
+          <Accessory name='380Km/h' icon={speedSVG}/>
+          <Accessory name='3.2s' icon={accelerationSVG}/>
+          <Accessory name='800 HP' icon={forceSVG}/>
+          <Accessory name='Gasolina' icon={gasolineSVG}/>
+          <Accessory name='Auto' icon={exchangeSVG}/>
+          <Accessory name='2 pessoas' icon={peopleSVG}/>
+        </Accessories>
 
-                <DateInfo>
-                  <DateTitle>DE</DateTitle>
-                  <DateValue>18/06/2021</DateValue>
-                </DateInfo>
+        <RentalPeriod>
+          <CalendarIcon>
+            <Feather
+              name='calendar'
+              size={RFValue(24)}
+              color={theme.colors.shape}
+            />
+          </CalendarIcon>
 
-                <Feather
-                    name='chevron-right'
-                    size={RFValue(10)}
-                    color={theme.colors.text}
-                />
+          <DateInfo>
+            <DateTitle>DE</DateTitle>
+            <DateValue>18/06/2021</DateValue>
+          </DateInfo>
 
-                <DateInfo>
-                  <DateTitle>ATÉ</DateTitle>
-                  <DateValue>18/06/2021</DateValue>
-                </DateInfo>
-              </RentalPeriod>
+          <Feather
+            name='chevron-right'
+            size={RFValue(10)}
+            color={theme.colors.text}
+          />
 
-              <RentalPrice>
-                <RentalPriceLabel>Total</RentalPriceLabel>
-                <RentalPriceDetail>
-                  <RentalPriceQuota>R$ 580 3x diária</RentalPriceQuota>
-                  <RentalPriceTotal>R$ 2.900</RentalPriceTotal>
-                </RentalPriceDetail>
-              </RentalPrice>
-            </Content>
+          <DateInfo>
+            <DateTitle>ATÉ</DateTitle>
+            <DateValue>18/06/2021</DateValue>
+          </DateInfo>
+        </RentalPeriod>
 
-            <Footer>
-              <Button
-                title="Alugar agora"
-                color={theme.colors.success}
-                onPress={handlerSchedulingComplete}
-              />
-            </Footer>
-        </Container>
-    );
+        <RentalPrice>
+          <RentalPriceLabel>Total</RentalPriceLabel>
+          <RentalPriceDetail>
+            <RentalPriceQuota>R$ 580 3x diária</RentalPriceQuota>
+            <RentalPriceTotal>R$ 2.900</RentalPriceTotal>
+          </RentalPriceDetail>
+        </RentalPrice>
+      </Content>
+
+      <Footer>
+        <Button
+          title="Alugar agora"
+          color={theme.colors.success}
+          onPress={handlerSchedulingComplete}
+        />
+      </Footer>
+    </Container>
+  );
 }
 
 export default SchedulingDetails;

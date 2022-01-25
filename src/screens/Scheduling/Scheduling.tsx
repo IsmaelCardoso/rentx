@@ -27,7 +27,11 @@ const Scheduling = () => {
   const navigation = useNavigation();
 
   const handlerConfirmPeriod = () => {
-    navigation.navigate('SchedulingDetails');
+    navigation.navigate('SchedulingDetails' as never);
+  }
+
+  const handlerGoBack = () => {
+    navigation.goBack();
   }
 
   return (
@@ -39,7 +43,7 @@ const Scheduling = () => {
       />
       <Header>
         <BackButton
-          onPress={() => navigation.goBack()}
+          onPress={handlerGoBack}
           color={theme.colors.shape}
         />
 

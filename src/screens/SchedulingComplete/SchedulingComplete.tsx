@@ -20,7 +20,7 @@ const SchedulingComplete = () => {
   const navigation = useNavigation();
 
   const handlerGoToHome= () => {
-    navigation.navigate('Home')
+    navigation.navigate('Home' as never)
   }
 
   return (

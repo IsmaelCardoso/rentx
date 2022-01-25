@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native'
 import { StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize'
 
 import Logo from '../../assets/logo.svg';
 import Car from '../../components/Car';
+
+import api from '../../services/api'
+import { CarDTO } from '../../dtos/CarDTO';
 
 import {
     Container,
@@ -13,50 +17,64 @@ import {
     TotalCars,
     CarList,
 } from './home.styles';
+import Load from '../../components/Load';
 
 const Home = () => {
   const navigation = useNavigation();
 
-  const CarDataMock = {
-      brand: "Audi",
-      name: "RS 5 Coupé",
-      rent: {
-          period: "ao dia",
-          price: "120",
-      },
-      thumbnail: "https://beta.alpes.one/storage/app/uploads/public/608/ad6/90f/608ad690f418e968296549.png"
+  const [cars, setCars] = useState<CarDTO[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const handlerCarDetail = (car: CarDTO) => {
+    navigation.navigate('CarDetails' as never, { car } as never);
   }
 
-    function handlerCarDetail() {
-      navigation.navigate('CarDetails');
+  useEffect(() => {
+    async function fetchCars() {
+      try {
+        const resp = await api.get('cars')
+
+        setCars(resp.data);
+      } catch(error) {
+        console.log(error)
+      } finally {
+        setLoading(false);
+      }
     }
 
-    return (
-        <Container>
-            <StatusBar
-                barStyle="light-content"
-                backgroundColor="transparent"
-                translucent
-            />
-            <Header>
-                <HeaderContent>
-                    <Logo
-                        width={RFValue(108)}
-                        height={RFValue(12)}
-                    />
-                    <TotalCars>
-                        Total 12 carros
-                    </TotalCars>
-                </HeaderContent>
-            </Header>
+    fetchCars();
+  }, [api])
+
+  return (
+      <Container>
+          <StatusBar
+              barStyle="light-content"
+              backgroundColor="transparent"
+              translucent
+          />
+          <Header>
+              <HeaderContent>
+                  <Logo
+                      width={RFValue(108)}
+                      height={RFValue(12)}
+                  />
+                  <TotalCars>
+                      Total {cars.length} carro{cars.length > 1 && 's'}
+                  </TotalCars>
+              </HeaderContent>
+          </Header>
+
+          {loading ?
+            <Load /> :
             <CarList
-                data={[ 1, 2, 3, 4, 5, 6, 7 ]}
-                keyExtractor={item => String(item)}
-                renderItem={({ item }) =>
-                  <Car data={CarDataMock} onPress={handlerCarDetail} />
+                data={cars}
+                keyExtractor={(item: CarDTO) => item.id}
+                renderItem={({ item }): JSX.Element =>
+                  <Car data={item} onPress={() => handlerCarDetail(item)} />
                 }
             />
-        </Container>
-    );
+          }
+      </Container>
+  );
 }
 export default Home;
