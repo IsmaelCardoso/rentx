@@ -1,1 +1,7 @@
-export { default } from "./Calendar"
+export {
+  Calendar,
+  CalendarProps,
+  IDayProps,
+  generateInterval,
+  MarkedDatesType
+} from "./Calendar"

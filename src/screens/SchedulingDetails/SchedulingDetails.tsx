@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
@@ -41,10 +41,28 @@ import {
   Footer,
 } from './SchedulingDetails.styles';
 import Button from '../../components/Button';
+import { CarDTO } from '../../dtos/CarDTO';
+import getAccessoryIcon from '../../utils/getAccessoryIcon';
+
+interface IParams {
+  car: CarDTO;
+  dates: string[];
+}
 
 const SchedulingDetails = () => {
   const theme = useTheme();
   const navigation = useNavigation();
+
+  const route = useRoute();
+
+  const { car, dates } = route.params as IParams
+  const {
+    name,
+    rent,
+    photos,
+    brand,
+    accessories,
+  } = car;
 
   const handlerSchedulingComplete = () => {
     navigation.navigate('SchedulingComplete' as never)
@@ -61,29 +79,30 @@ const SchedulingDetails = () => {
       </Header>
 
       <CarImageContainer>
-        <ImageSlider imagesUrl={["https://beta.alpes.one/storage/app/uploads/public/608/ad6/90f/608ad690f418e968296549.png"]} />
+        <ImageSlider imagesUrl={photos} />
       </CarImageContainer>
 
       <Content>
         <Details>
           <Description>
-            <Brand>Lamborghini</Brand>
-            <Name>Huracan</Name>
+            <Brand>{brand}</Brand>
+            <Name>{name}</Name>
           </Description>
 
           <Rent>
-            <Period>Ao dia</Period>
-            <Price>R$ 500</Price>
+            <Period>{rent.period}</Period>
+            <Price>R$ {rent.price}</Price>
           </Rent>
         </Details>
 
         <Accessories>
-          <Accessory name='380Km/h' icon={speedSVG}/>
-          <Accessory name='3.2s' icon={accelerationSVG}/>
-          <Accessory name='800 HP' icon={forceSVG}/>
-          <Accessory name='Gasolina' icon={gasolineSVG}/>
-          <Accessory name='Auto' icon={exchangeSVG}/>
-          <Accessory name='2 pessoas' icon={peopleSVG}/>
+          {accessories.map((accessory) =>
+            <Accessory
+              key={accessory.type}
+              name={accessory.name}
+              icon={getAccessoryIcon(accessory.type)}
+            />
+          )}
         </Accessories>
 
         <RentalPeriod>

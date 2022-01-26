@@ -45,7 +45,7 @@ const CarDetails = () => {
   } = car;
 
   const handlerConfirmRental = () => {
-    navigation.navigate('Scheduling' as never);
+    navigation.navigate('Scheduling' as never, { car } as never);
   }
 
   const handlerGoBack = () => {
