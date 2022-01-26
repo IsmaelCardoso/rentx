@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native'
+import { Ionicons } from '@expo/vector-icons'
 import { StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize'
 
-import Logo from '../../assets/logo.svg';
-import Car from '../../components/Car';
-
 import api from '../../services/api'
 import { CarDTO } from '../../dtos/CarDTO';
+
+import Logo from '../../assets/logo.svg';
+import Car from '../../components/Car';
+import Load from '../../components/Load';
+import FloatingButton from '../../components/FloatingButton';
+
+import { useTheme } from 'styled-components'
 
 import {
     Container,
@@ -17,16 +21,21 @@ import {
     TotalCars,
     CarList,
 } from './home.styles';
-import Load from '../../components/Load';
 
 const Home = () => {
-  const navigation = useNavigation();
-
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const navigation = useNavigation();
+
+  const theme = useTheme();
+
   const handlerCarDetail = (car: CarDTO) => {
     navigation.navigate('CarDetails' as never, { car } as never);
+  }
+
+  const handlerOpenMyCar = () => {
+    navigation.navigate('MyCars' as never);
   }
 
   useEffect(() => {
@@ -74,6 +83,16 @@ const Home = () => {
                 }
             />
           }
+
+          <FloatingButton
+            onPress={handlerOpenMyCar}
+          >
+            <Ionicons
+              name='ios-car-sport'
+              color={theme.colors.shape}
+              size={32}
+            />
+          </FloatingButton>
       </Container>
   );
 }
