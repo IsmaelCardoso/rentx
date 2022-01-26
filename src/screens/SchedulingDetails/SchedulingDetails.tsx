@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { Feather } from '@expo/vector-icons'
 import { RFValue } from 'react-native-responsive-fontsize';
-import { useTheme } from 'styled-components';
+import { Alert } from 'react-native';
+import { Feather } from '@expo/vector-icons'
 
+import { useTheme } from 'styled-components';
 import Accessory from '../../components/Accessory';
 import BackButton from '../../components/BackButton';
 import ImageSlider from '../../components/ImageSlider';
+import Button from '../../components/Button';
 
-import speedSVG from '../../assets/speed.svg'
-import accelerationSVG from '../../assets/acceleration.svg'
-import forceSVG from '../../assets/force.svg'
-import gasolineSVG from '../../assets/gasoline.svg'
-import exchangeSVG from '../../assets/exchange.svg'
-import peopleSVG from '../../assets/people.svg'
+import api from '../../services/api';
+
+import { CarDTO } from '../../dtos/CarDTO';
+import getAccessoryIcon from '../../utils/getAccessoryIcon';
+import getPlatformDate from '../../utils/getPlatformDate';
+import { format } from 'date-fns';
 
 import {
   Container,
@@ -40,16 +42,27 @@ import {
   RentalPriceTotal,
   Footer,
 } from './SchedulingDetails.styles';
-import Button from '../../components/Button';
-import { CarDTO } from '../../dtos/CarDTO';
-import getAccessoryIcon from '../../utils/getAccessoryIcon';
 
 interface IParams {
   car: CarDTO;
   dates: string[];
 }
 
+interface IRentalPeriod {
+  startFormatted: string;
+  endFormatted: string;
+}
+
+interface IScheduleByCar {
+  data: {
+    id: string;
+    unavailable_dates: string[];
+  }
+}
+
 const SchedulingDetails = () => {
+  const [rentalPeriod, setRentalPeriod] = useState<IRentalPeriod>({} as IRentalPeriod);
+
   const theme = useTheme();
   const navigation = useNavigation();
 
@@ -57,6 +70,7 @@ const SchedulingDetails = () => {
 
   const { car, dates } = route.params as IParams
   const {
+    id,
     name,
     rent,
     photos,
@@ -64,13 +78,43 @@ const SchedulingDetails = () => {
     accessories,
   } = car;
 
-  const handlerSchedulingComplete = () => {
-    navigation.navigate('SchedulingComplete' as never)
+  const rentTotal = Number(dates.length * Number(rent.price))
+
+  const handlerSchedulingComplete = async() => {
+    const scheduleByCar: IScheduleByCar = await api.get(`schedules_bycars/${id}`)
+
+    const unavailable_dates = [
+      ...scheduleByCar.data.unavailable_dates,
+      ...dates
+    ]
+
+    await api.put(`schedules_bycars/${id}`, {
+      id,
+      unavailable_dates
+    })
+    .then(resp => navigation.navigate('SchedulingComplete' as never))
+    .catch((error) => Alert.alert(
+      "Atenção",
+      "Não foi possivel realizar o agendamento, por favor tente novamente"
+    ))
   }
 
   const handlerGoBack = () => {
     navigation.goBack();
   }
+
+  const handlerDateFormat = () => {
+    if(dates.length > 0) {
+      const startFormatted = format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy')
+      const endFormatted = format(getPlatformDate(new Date(dates[dates.length - 1])), 'dd/MM/yyyy')
+
+      setRentalPeriod({ startFormatted, endFormatted })
+    }
+  }
+
+  useEffect(() => {
+    handlerDateFormat();
+  }, [])
 
   return (
     <Container>
@@ -116,7 +160,7 @@ const SchedulingDetails = () => {
 
           <DateInfo>
             <DateTitle>DE</DateTitle>
-            <DateValue>18/06/2021</DateValue>
+            <DateValue>{rentalPeriod.startFormatted}</DateValue>
           </DateInfo>
 
           <Feather
@@ -127,15 +171,17 @@ const SchedulingDetails = () => {
 
           <DateInfo>
             <DateTitle>ATÉ</DateTitle>
-            <DateValue>18/06/2021</DateValue>
+            <DateValue>{rentalPeriod.endFormatted}</DateValue>
           </DateInfo>
         </RentalPeriod>
 
         <RentalPrice>
           <RentalPriceLabel>Total</RentalPriceLabel>
           <RentalPriceDetail>
-            <RentalPriceQuota>R$ 580 3x diária</RentalPriceQuota>
-            <RentalPriceTotal>R$ 2.900</RentalPriceTotal>
+            <RentalPriceQuota>
+              {`R$ ${rent.price} x${dates.length} diária`}
+            </RentalPriceQuota>
+            <RentalPriceTotal>R$ {rentTotal}</RentalPriceTotal>
           </RentalPriceDetail>
         </RentalPrice>
       </Content>
