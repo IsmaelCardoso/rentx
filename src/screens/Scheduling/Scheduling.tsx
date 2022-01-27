@@ -93,6 +93,11 @@ const Scheduling = () => {
         backgroundColor="transparent"
       />
       <Header>
+        <StatusBar
+          barStyle="light-content"
+          translucent
+          backgroundColor="transparent"
+        />
         <BackButton
           onPress={handlerGoBack}
           color={theme.colors.shape}

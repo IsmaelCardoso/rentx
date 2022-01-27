@@ -77,10 +77,10 @@ const Home = () => {
             <Load /> :
             <CarList
                 data={cars}
-                keyExtractor={(item: CarDTO) => item.id}
                 renderItem={({ item }): JSX.Element =>
                   <Car data={item} onPress={() => handlerCarDetail(item)} />
                 }
+              keyExtractor={(item: CarDTO) => item.id}
             />
           }
 

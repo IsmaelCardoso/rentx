@@ -37,8 +37,8 @@ const Car = ({ data, ...rest }: Props) => {
 
         <About>
           <Rent>
-            <Period>{rent.period}</Period>
-            <Price>{`R$${rent.price}`}</Price>
+            <Period>{rent?.period}</Period>
+            <Price>{`R$${rent?.price}`}</Price>
           </Rent>
 
           <Type>
