@@ -62,6 +62,7 @@ interface IScheduleByCar {
 
 const SchedulingDetails = () => {
   const [rentalPeriod, setRentalPeriod] = useState<IRentalPeriod>({} as IRentalPeriod);
+  const [loading, setLoading] = useState(false);
 
   const theme = useTheme();
   const navigation = useNavigation();
@@ -81,6 +82,8 @@ const SchedulingDetails = () => {
   const rentTotal = Number(dates.length * Number(rent.price))
 
   const handlerSchedulingComplete = async() => {
+    setLoading(true);
+
     const scheduleByCar: IScheduleByCar = await api.get(`schedules_bycars/${id}`)
 
     const unavailable_dates = [
@@ -100,10 +103,12 @@ const SchedulingDetails = () => {
       unavailable_dates
     })
     .then(resp => navigation.navigate('SchedulingComplete' as never))
-    .catch((error) => Alert.alert(
+    .catch((error) => {
+      setLoading(false);
+      Alert.alert(
       "Atenção",
       "Não foi possivel realizar o agendamento, por favor tente novamente"
-    ))
+    )})
   }
 
   const handlerGoBack = () => {
@@ -198,6 +203,8 @@ const SchedulingDetails = () => {
           title="Alugar agora"
           color={theme.colors.success}
           onPress={handlerSchedulingComplete}
+          enabled={!loading}
+          loading={loading}
         />
       </Footer>
     </Container>
