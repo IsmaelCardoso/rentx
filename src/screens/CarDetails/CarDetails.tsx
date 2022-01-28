@@ -10,8 +10,6 @@ import getAccessoryIcon from '../../utils/getAccessoryIcon'
 import {
     Container,
     Header,
-    CarImageContainer,
-    Content,
     Details,
     Description,
     Brand,
@@ -25,6 +23,15 @@ import {
 } from './CarDetails.styles';
 import Button from '../../components/Button';
 import { CarDTO } from '../../dtos/CarDTO';
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue
+} from 'react-native-reanimated';
+import { StatusBar } from 'react-native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 interface IParams {
   car: CarDTO;
@@ -44,6 +51,33 @@ const CarDetails = () => {
     accessories,
   } = car;
 
+  const scrollY = useSharedValue(0);
+  const scrollHandler = useAnimatedScrollHandler(event => {
+    scrollY.value = event.contentOffset.y;
+    console.log(event.contentOffset.y);
+  })
+  const headerStyleAnimated = useAnimatedStyle(() => {
+    return {
+      height: interpolate(
+        scrollY.value,
+        [0, 200],
+        [200, 70],
+        Extrapolate.CLAMP,
+      )
+    }
+  })
+
+  const sliderCarStyleAnimation = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(
+        scrollY.value,
+        [0, 150],
+        [1, 0],
+        Extrapolate.CLAMP,
+      )
+    }
+  })
+
   const handlerConfirmRental = () => {
     navigation.navigate('Scheduling' as never, { car } as never);
   }
@@ -53,48 +87,78 @@ const CarDetails = () => {
   }
 
   return (
-      <Container>
-          <Header>
-            <BackButton onPress={handlerGoBack} />
-          </Header>
+    <Container>
+      <StatusBar
+        barStyle="dark-content"
+        translucent
+        backgroundColor="transparent"
+      />
 
-          <CarImageContainer>
-            <ImageSlider imagesUrl={photos} />
-          </CarImageContainer>
+      <Animated.View
+        style={[headerStyleAnimated]}
+      >
+        <Header>
+          <BackButton onPress={handlerGoBack} />
+        </Header>
 
-          <Content>
-            <Details>
-              <Description>
-                  <Brand>{brand}</Brand>
-                  <Name>{name}</Name>
-              </Description>
+        <Animated.View
+          style={[
+            sliderCarStyleAnimation,
+            { marginTop: getStatusBarHeight() + 32 }
+          ]}
+        >
+          <ImageSlider imagesUrl={photos} />
+        </Animated.View>
+      </Animated.View>
 
-              <Rent>
-                  <Period>{rent.period}</Period>
-                  <Price>R$ {rent.price}</Price>
-              </Rent>
-            </Details>
+      <Animated.ScrollView
+        contentContainerStyle={{
+          padding: 24,
+          alignItems: 'center',
+        }}
+        showsVerticalScrollIndicator={false}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+      >
+        <Details>
+          <Description>
+              <Brand>{brand}</Brand>
+              <Name>{name}</Name>
+          </Description>
 
-            <Accessories>
-              {accessories.map((accessory) =>
-                <Accessory
-                  key={accessory.type}
-                  name={accessory.name}
-                  icon={getAccessoryIcon(accessory.type)}
-                />
-              )}
-            </Accessories>
+          <Rent>
+              <Period>{rent.period}</Period>
+              <Price>R$ {rent.price}</Price>
+          </Rent>
+        </Details>
 
-            <About>{about}</About>
-          </Content>
-
-          <Footer>
-            <Button
-              title="Escolher período de aluguel"
-              onPress={handlerConfirmRental}
+        <Accessories>
+          {accessories.map((accessory) =>
+            <Accessory
+              key={accessory.type}
+              name={accessory.name}
+              icon={getAccessoryIcon(accessory.type)}
             />
-          </Footer>
-      </Container>
+          )}
+        </Accessories>
+
+        <About>
+          {about}
+          {about}
+          {about}
+          {about}
+          {about}
+          {about}
+        </About>
+      </Animated.ScrollView>
+
+      <Footer>
+        <Button
+          title="Escolher período de aluguel"
+          onPress={handlerConfirmRental}
+        />
+      </Footer>
+    </Container>
   );
 }
 
