@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons'
 
 import BackButton from '../../components/BackButton';
 import Car from '../../components/Car';
-import Load from '../../components/Load';
+import LoadAnimated from '../../components/LoadAnimated';
 
 import { CarDTO } from '../../dtos/CarDTO';
 import api from '../../services/api';
@@ -86,7 +86,7 @@ const MyCars = () => {
       </Header>
 
       {loading ?
-        <Load /> :
+        <LoadAnimated /> :
         <Content>
           <Appointments>
             <AppointmentsTitle>Agendamentos realizados</AppointmentsTitle>

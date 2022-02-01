@@ -19,7 +19,7 @@ import { CarDTO } from '../../dtos/CarDTO';
 
 import Logo from '../../assets/logo.svg';
 import Car from '../../components/Car';
-import Load from '../../components/Load';
+import LoadAnimated from '../../components/LoadAnimated';
 
 import { useTheme } from 'styled-components'
 import globalTheme from '../../styles/theme'
@@ -122,7 +122,7 @@ const Home = () => {
             </HeaderContent>
         </Header>
 
-        {loading ? <Load /> :
+        {loading ? <LoadAnimated /> :
           <CarList
               data={cars}
               renderItem={({ item }): JSX.Element =>
