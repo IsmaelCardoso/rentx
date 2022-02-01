@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native'
 import { RectButton, PanGestureHandler } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons'
-import { StatusBar, StyleSheet } from 'react-native';
+import { BackHandler, StatusBar, StyleSheet } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize'
 
 import Animated, {
@@ -89,7 +89,16 @@ const Home = () => {
     }
 
     fetchCars();
-  }, [api])
+  }, [api]);
+
+  /*
+  * No Android pra previnir não voltar para a tela de Splash
+  **/
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return true;
+    });
+  })
 
   return (
     <Container>
@@ -104,9 +113,12 @@ const Home = () => {
                     width={RFValue(108)}
                     height={RFValue(12)}
                 />
-                <TotalCars>
-                    Total {cars.length} carro{cars.length > 1 && 's'}
-                </TotalCars>
+                {
+                  !loading &&
+                  <TotalCars>
+                      Total {cars.length} carro{cars.length > 1 && 's'}
+                  </TotalCars>
+                }
             </HeaderContent>
         </Header>
 

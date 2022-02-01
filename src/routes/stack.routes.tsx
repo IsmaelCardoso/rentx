@@ -25,9 +25,13 @@ const StackRoutes = () => {
         component={Splash}
       />
 
+      {/* No IOS "options" => pra previnir não voltar para a tela de Splash */}
       <Screen
         name="Home"
         component={Home}
+        options={{
+          gestureEnabled: false,
+        }}
       />
 
       <Screen
