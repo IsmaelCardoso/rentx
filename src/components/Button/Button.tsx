@@ -10,6 +10,7 @@ interface IButton  extends RectButtonProps {
   color?: string;
   enabled?: boolean,
   loading?: boolean,
+  light?: boolean,
 }
 
 const Button = ({
@@ -17,6 +18,7 @@ const Button = ({
   color,
   enabled = true,
   loading = false,
+  light = false,
   ...rest
 }: IButton) => {
   const theme = useTheme();
@@ -33,7 +35,7 @@ const Button = ({
         <ActivityIndicator
           color={theme.colors.shape}
         /> :
-        <Title>
+        <Title light={light}>
           {title}
         </Title>
       }
