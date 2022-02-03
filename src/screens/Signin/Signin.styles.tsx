@@ -31,13 +31,12 @@ export const SubTitle = styled.Text`
   margin-top: 16px;
 `;
 
-export const Content = styled.View`
+export const Form = styled.View`
+width: 100%;
 
-  margin-top: 64px;
+  margin: 64px 0;
 `;
 
 export const Footer = styled.View`
   width: 100%;
-
-  margin-top: 64px;
 `;
