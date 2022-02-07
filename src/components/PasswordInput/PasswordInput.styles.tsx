@@ -29,5 +29,5 @@ export const InputText = styled(TextInput)`
   font-family: ${({ theme }) => theme.fonts.primary_400};
   font-size: ${RFValue(15)}px;
 
-  padding: 0 23px
-  `;
+  padding: 0 23px;
+`;
