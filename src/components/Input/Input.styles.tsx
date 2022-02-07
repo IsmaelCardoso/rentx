@@ -1,15 +1,31 @@
 import styled from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { TextInput } from 'react-native';
 
 export const Container = styled.View`
-
-  padding: 20px;
-
   flex-direction: row;
-  justify-content: space-between;
+`
+
+export const IconContainer = styled.View`
+  width: 55px;
+  height: 55px;
+
+  justify-content: center;
   align-items: center;
 
   background-color: ${({ theme }) => theme.colors.background_secondary};
 
-  border-radius: 5px;
-`
-export const Title = styled.Text``;
+  margin-right: 2px;
+`;
+
+export const InputText = styled(TextInput)`
+  flex: 1;
+
+  background-color: ${({ theme }) => theme.colors.background_secondary};
+
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.primary_400};
+  font-size: ${RFValue(15)}px;
+
+  padding: 0 23px
+  `;

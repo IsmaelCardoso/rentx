@@ -31,13 +31,19 @@ const Signin = () => {
       </Header>
 
       <Form>
-        <Input iconName='mail'/>
+        <Input
+          iconName='mail'
+          placeholder='E-mail'
+          keyboardType='email-address'
+          autoCorrect={false}
+          autoCapitalize='none'
+        />
       </Form>
 
       <Footer>
         <Button
           title="Login"
-          enabled={false}
+          enabled={true}
           loading={false}
           onPress={() => {}}
         />
@@ -45,7 +51,7 @@ const Signin = () => {
           title="Criar conta gratuita"
           color={theme.colors.background_secondary}
           light
-          enabled={false}
+          enabled={true}
           loading={false}
           onPress={() => {}}
         />
