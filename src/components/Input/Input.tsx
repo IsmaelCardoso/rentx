@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Feather } from '@expo/vector-icons'
 import { useTheme } from 'styled-components';
 import { TextInputProps } from 'react-native';
@@ -13,19 +13,34 @@ interface IInput extends TextInputProps {
 }
 
 const Input = ({ iconName, ...rest }: IInput) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
+
   const theme = useTheme();
 
+  const handlerInputFocus = () => {
+    setIsFocused(true)
+  }
+
+  const handlerInputBlur = () => {
+    setIsFocused(false)
+  }
+
   return (
-    <Container>
+    <Container isFocused={isFocused}>
       <IconContainer>
         <Feather
           name={iconName}
           size={24}
-          color={theme.colors.text_detail}
+          color={isFocused ? theme.colors.main : theme.colors.text_detail}
         />
       </IconContainer>
 
-      <InputText  {...rest }/>
+      <InputText
+        onFocus={handlerInputFocus}
+        onBlur={handlerInputBlur}
+        {...rest }
+      />
 
     </Container>
   );
