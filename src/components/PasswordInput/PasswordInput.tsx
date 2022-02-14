@@ -10,29 +10,47 @@ import {
   InputText,
 } from './PasswordInput.styles';
 interface IInput extends TextInputProps {
-  iconName: React.ComponentProps<typeof Feather>['name']
+  iconName: React.ComponentProps<typeof Feather>['name'];
+  value?: string;
 }
 
-const PasswordInput = ({ iconName, ...rest }: IInput) => {
+const PasswordInput = ({ iconName, value, ...rest }: IInput) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
 
   const theme = useTheme();
+
+  const handlerInputFocus = () => {
+    setIsFocused(true)
+  }
+
+  const handlerInputBlur = () => {
+    setIsFocused(false)
+
+    setIsFilled(!!value)
+  }
 
   const handlePasswordVisibilityChange = () => {
     setIsPasswordVisible(prevState => !prevState);
   }
 
   return (
-    <Container>
+    <Container isFocused={isFocused}>
       <IconContainer>
         <Feather
           name={iconName}
           size={24}
-          color={theme.colors.text_detail}
+          color={isFocused || isFilled ? theme.colors.main : theme.colors.text_detail}
         />
       </IconContainer>
 
-      <InputText  {...rest } secureTextEntry={isPasswordVisible} />
+      <InputText
+        {...rest }
+        secureTextEntry={isPasswordVisible}
+        onFocus={handlerInputFocus}
+        onBlur={handlerInputBlur}
+      />
 
       <BorderlessButton onPress={handlePasswordVisibilityChange}>
         <IconContainer>
