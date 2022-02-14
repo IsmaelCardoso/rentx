@@ -36,8 +36,8 @@ const PasswordInput = ({ iconName, value, ...rest }: IInput) => {
   }
 
   return (
-    <Container isFocused={isFocused}>
-      <IconContainer>
+    <Container>
+      <IconContainer isFocused={isFocused}>
         <Feather
           name={iconName}
           size={24}
@@ -50,10 +50,11 @@ const PasswordInput = ({ iconName, value, ...rest }: IInput) => {
         secureTextEntry={isPasswordVisible}
         onFocus={handlerInputFocus}
         onBlur={handlerInputBlur}
+        isFocused={isFocused}
       />
 
       <BorderlessButton onPress={handlePasswordVisibilityChange}>
-        <IconContainer>
+        <IconContainer isFocused={isFocused}>
           <Feather
             name={isPasswordVisible ? 'eye' : 'eye-off'}
             size={24}

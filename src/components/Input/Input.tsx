@@ -30,8 +30,8 @@ const Input = ({ iconName, value, ...rest }: IInput) => {
   }
 
   return (
-    <Container isFocused={isFocused}>
-      <IconContainer>
+    <Container>
+      <IconContainer isFocused={isFocused}>
         <Feather
           name={iconName}
           size={24}
@@ -42,6 +42,7 @@ const Input = ({ iconName, value, ...rest }: IInput) => {
       <InputText
         onFocus={handlerInputFocus}
         onBlur={handlerInputBlur}
+        isFocused={isFocused}
         {...rest }
       />
 
