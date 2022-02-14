@@ -8,7 +8,6 @@ import { Container, Title } from './Button.styles';
 interface IButton extends RectButtonProps {
   title: string;
   color?: string;
-  enabled?: boolean,
   loading?: boolean,
   light?: boolean,
 }
