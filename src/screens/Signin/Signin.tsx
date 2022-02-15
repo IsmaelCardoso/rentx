@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
   StatusBar,
   KeyboardAvoidingView,
@@ -29,6 +30,8 @@ const schema = Yup.object().shape({
 })
 
 const Signin = () => {
+  const navigation = useNavigation();
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -46,6 +49,10 @@ const Signin = () => {
         )
       }
     }
+  }
+
+  const handleNewAccount = async () => {
+    navigation.navigate('SignupFirstStep' as never)
   }
 
   return (
@@ -97,7 +104,7 @@ const Signin = () => {
               light
               enabled={true}
               loading={false}
-              onPress={() => {}}
+              onPress={handleNewAccount}
             />
           </Footer>
 

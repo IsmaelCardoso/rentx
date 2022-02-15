@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { FlatList, ViewToken } from 'react-native';
+import Bullets from '../Bullets';
 
 import {
     Container,
     ImageIndexs,
-    ImageIndex,
     CarImageWrapper,
     CarImage
 } from './ImageSlider.styles';
@@ -32,7 +32,7 @@ const ImageSlider = ({ imagesUrl }: IImages) => {
       <Container>
         <ImageIndexs>
           {imagesUrl.map((_, idx) => (
-            <ImageIndex
+            <Bullets
               key={String(idx)}
               active={imageIdx === idx}
             />
@@ -41,7 +41,7 @@ const ImageSlider = ({ imagesUrl }: IImages) => {
 
         <FlatList
           data={imagesUrl}
-          keyExtrator={(key: any) => key}
+          keyExtrator={(key: string) => key}
           renderItem={({ item }) => (
             <CarImageWrapper>
               <CarImage

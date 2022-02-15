@@ -9,6 +9,7 @@ import SchedulingComplete from '../screens/SchedulingComplete';
 import MyCars from '../screens/MyCars';
 import Splash from '../screens/Splash';
 import Signin from '../screens/Signin/Signin';
+import { SignupFirstStep,  SignupSecondStep } from '../screens/Signup'
 
 const { Navigator, Screen } = createStackNavigator()
 
@@ -29,6 +30,16 @@ const StackRoutes = () => {
       <Screen
         name="Signin"
         component={Signin}
+      />
+
+      <Screen
+        name="SignupFirstStep"
+        component={SignupFirstStep}
+      />
+
+      <Screen
+        name="SignupSecondStep"
+        component={SignupSecondStep}
       />
 
       {/* No IOS "options" => pra previnir não voltar para a tela de Splash */}
