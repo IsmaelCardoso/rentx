@@ -61,21 +61,24 @@ export const SignupSecondStep = () => {
       return Alert.alert('As senhas não são iguais')
     }
 
-    if (password === passwordConfirm) {
-      try {
-        // await api.post('user-register', user)
+    try {
+      await api.post('users', {
+        name: user.name,
+        email: user.email,
+        driver_license: user.driverLicense,
+        password,
+      })
 
-        navigation.navigate('Confirmation' as never, {
-          title: "Conta criada",
-          message: `Agora é só fazer o login\ne aproveitar.`,
-          nextScreenRoute: "Signin",
-        } as never)
-      } catch(err) {
-        Alert.alert(
-          'Erro ao finalizar cadastro',
-          'Ocorreu um erro ao finalizar o cadastro, verifique as informações.'
-        )
-      }
+      navigation.navigate('Confirmation' as never, {
+        title: "Conta criada",
+        message: `Agora é só fazer o login\ne aproveitar.`,
+        nextScreenRoute: "Signin",
+      } as never)
+    } catch(err) {
+      Alert.alert(
+        'Erro ao finalizar cadastro',
+        'Ocorreu um erro ao finalizar o cadastro, verifique as informações.'
+      )
     }
   }
 
