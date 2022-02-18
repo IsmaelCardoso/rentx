@@ -90,7 +90,7 @@ export const SignupFirstStep = () => {
             <Input
               iconName='user'
               placeholder="Nome"
-              autoCapitalize='words'
+              autoCapitalize='sentences'
               onChangeText={setName}
               value={name}
             />

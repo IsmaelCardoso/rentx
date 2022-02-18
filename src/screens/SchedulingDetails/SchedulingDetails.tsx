@@ -102,7 +102,11 @@ const SchedulingDetails = () => {
       id,
       unavailable_dates
     })
-    .then(resp => navigation.navigate('SchedulingComplete' as never))
+    .then(resp => navigation.navigate('Confirmation' as never, {
+      title: "Carro Alugado!",
+      message: `Agora você só precisa ir\naté a concessionária a RENTX\npegar o seu automóvel.`,
+      nextScreenRoute: "Home",
+    } as never))
     .catch((error) => {
       setLoading(false);
       Alert.alert(

@@ -65,7 +65,11 @@ export const SignupSecondStep = () => {
       try {
         // await api.post('user-register', user)
 
-        navigation.navigate('SchedulingComplete' as never)
+        navigation.navigate('Confirmation' as never, {
+          title: "Conta criada",
+          message: `Agora é só fazer o login\ne aproveitar.`,
+          nextScreenRoute: "Signin",
+        } as never)
       } catch(err) {
         Alert.alert(
           'Erro ao finalizar cadastro',
