@@ -13,42 +13,18 @@ import { SignupFirstStep,  SignupSecondStep } from '../screens/Signup'
 
 const { Navigator, Screen } = createStackNavigator()
 
-const StackRoutes = () => {
+const AppStackRoutes = () => {
 
   return (
     <Navigator
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName='Signin'
+      initialRouteName='Home'
     >
-      {/* <Screen
-        name="Splash"
-        component={Splash}
-      /> */}
-
-      <Screen
-        name="Signin"
-        component={Signin}
-      />
-
-      <Screen
-        name="SignupFirstStep"
-        component={SignupFirstStep}
-      />
-
-      <Screen
-        name="SignupSecondStep"
-        component={SignupSecondStep}
-      />
-
-      {/* No IOS "options" => pra previnir não voltar para a tela de Splash */}
       <Screen
         name="Home"
         component={Home}
-        options={{
-          gestureEnabled: false,
-        }}
       />
 
       <Screen
@@ -79,4 +55,4 @@ const StackRoutes = () => {
 
 }
 
-export default StackRoutes;
+export default AppStackRoutes;

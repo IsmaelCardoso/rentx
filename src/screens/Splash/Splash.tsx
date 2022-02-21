@@ -62,7 +62,7 @@ const Splash = () => {
   })
 
   const startApp = () => {
-    navigation.navigate('Home' as never);
+    navigation.navigate('Signin' as never);
   }
 
   /*
