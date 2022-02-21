@@ -25,7 +25,7 @@ interface Props extends RectButtonProps {
 }
 
 const Car = ({ data, ...rest }: Props) => {
-  const { brand, name, rent, thumbnail, fuel_type } = data
+  const { brand, name, period, price, thumbnail, fuel_type } = data
 
   const MotorIcon = getAccessoryIcon(fuel_type);
 
@@ -37,8 +37,8 @@ const Car = ({ data, ...rest }: Props) => {
 
         <About>
           <Rent>
-            <Period>{rent?.period}</Period>
-            <Price>{`R$${rent?.price}`}</Price>
+            <Period>{period}</Period>
+            <Price>{`R$${price}`}</Price>
           </Rent>
 
           <Type>

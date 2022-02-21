@@ -3,9 +3,9 @@ export interface IAccessories{
   type: string;
 }
 
-export interface IRent {
-  period: string;
-  price: string;
+export interface IPhotos {
+  id: string;
+  photo: string;
 }
 export interface CarDTO {
   id: string;
@@ -14,7 +14,8 @@ export interface CarDTO {
   accessories: IAccessories[];
   brand: string;
   fuel_type: string;
-  photos: string[];
-  rent: IRent;
+  photos: IPhotos[];
+  period: string;
+  price: string;
   thumbnail: string
 }

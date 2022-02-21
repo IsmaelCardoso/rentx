@@ -9,8 +9,13 @@ import {
     CarImage
 } from './ImageSlider.styles';
 
+interface IImage {
+  id: string;
+  photo: string;
+}
+
 interface IImages {
-    imagesUrl: string[],
+    imagesUrl: IImage[],
 }
 
 interface IChangeImage {
@@ -31,9 +36,9 @@ const ImageSlider = ({ imagesUrl }: IImages) => {
   return (
       <Container>
         <ImageIndexs>
-          {imagesUrl.map((_, idx) => (
+          {imagesUrl.map((item, idx) => (
             <Bullets
-              key={String(idx)}
+              key={item.id}
               active={imageIdx === idx}
             />
           ))}
@@ -41,11 +46,11 @@ const ImageSlider = ({ imagesUrl }: IImages) => {
 
         <FlatList
           data={imagesUrl}
-          keyExtrator={(key: string) => key}
+          keyExtrator={(item: IImage) => item.id}
           renderItem={({ item }) => (
             <CarImageWrapper>
               <CarImage
-                source={{ uri: item }}
+                source={{ uri: item.photo }}
                 resizeMode='contain'
               />
             </CarImageWrapper>

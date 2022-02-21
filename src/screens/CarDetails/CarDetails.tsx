@@ -45,7 +45,8 @@ const CarDetails = () => {
   const {
     name,
     about,
-    rent,
+    period,
+    price,
     photos,
     brand,
     accessories,
@@ -127,8 +128,8 @@ const CarDetails = () => {
           </Description>
 
           <Rent>
-              <Period>{rent.period}</Period>
-              <Price>R$ {rent.price}</Price>
+              <Period>{period}</Period>
+              <Price>R$ {price}</Price>
           </Rent>
         </Details>
 
