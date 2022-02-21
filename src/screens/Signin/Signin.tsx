@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import * as Yup from 'yup';
 
+import { useAuth } from '../../hook/auth'
+
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import PasswordInput from '../../components/PasswordInput';
@@ -31,6 +33,7 @@ const schema = Yup.object().shape({
 
 const Signin = () => {
   const navigation = useNavigation();
+  const { signIn } = useAuth();
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -38,6 +41,8 @@ const Signin = () => {
   const handleSignin = async () => {
     try {
       await schema.validate({ email, password })
+
+      signIn({ email, password});
     } catch (err) {
       if(err instanceof Yup.ValidationError) {
         console.log("ERROR:", err.path)
