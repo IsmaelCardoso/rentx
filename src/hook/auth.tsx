@@ -67,9 +67,6 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
       const userCollection = database.get<ModelUser>('users');
       const resp = await userCollection.query().fetch();
 
-      console.log('resp:', resp);
-      // console.log('userCollection:', userCollection)
-
       if (resp.length > 0) {
         const userData = resp[0]._raw as unknown as IUser;
 
