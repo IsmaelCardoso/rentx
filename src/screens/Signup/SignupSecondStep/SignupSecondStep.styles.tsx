@@ -23,23 +23,6 @@ export const Steps = styled.View`
   align-items: center;
 `;
 
-export const Title = styled.Text`
-  font-size: ${RFValue(40)}px;
-  font-family: ${({ theme }) => theme.fonts.secondary_600};
-  color: ${({ theme}) => theme.colors.title};
-
-  margin-top: 60px;
-`;
-
-export const SubTitle = styled.Text`
-  font-size: ${RFValue(15)}px;
-  font-family: ${({ theme }) => theme.fonts.primary_400};
-
-  color: ${({ theme }) => theme.colors.text};
-
-  line-height: ${RFValue(25)}px;
-`;
-
 export const Form = styled.View`
   width: 100%;
   margin-top: 64px;

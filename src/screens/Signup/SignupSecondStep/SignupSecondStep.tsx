@@ -18,9 +18,7 @@ import api from '../../../services/api';
 import {
   Container,
   Header,
-  Title,
   Steps,
-  SubTitle,
   Form,
   FormTitle,
 } from './SignupSecondStep.styles';
@@ -46,10 +44,6 @@ export const SignupSecondStep = () => {
 
   const handleBack = () => {
     navigation.goBack();
-  }
-
-  const handleSecondStep = () => {
-    navigation.navigate('SignupSecondStep' as never);
   }
 
   const handleRegister = async() => {

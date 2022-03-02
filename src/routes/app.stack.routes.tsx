@@ -7,9 +7,6 @@ import Scheduling from '../screens/Scheduling';
 import SchedulingDetails from '../screens/SchedulingDetails';
 import Confirmation from '../screens/Confirmation';
 import MyCars from '../screens/MyCars';
-import Splash from '../screens/Splash';
-import Signin from '../screens/Signin/Signin';
-import { SignupFirstStep,  SignupSecondStep } from '../screens/Signup'
 
 const { Navigator, Screen } = createStackNavigator()
 
