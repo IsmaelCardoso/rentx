@@ -33,7 +33,7 @@ const AppTabRoutes = () => {
       }}
     >
       <Screen
-        name="Home"
+        name="HomeTab"
         component={AppStackRoutes}
         options={{
           tabBarIcon: (({ color }) => (

@@ -29,19 +29,29 @@ const Home = () => {
   }
 
   useEffect(() => {
+    // Esta variavel garante que o estado não será atualizado caso esta interface não esteja mais em execução
+    let isMounted = true;
+
     async function fetchCars() {
       try {
         const resp = await api.get('cars')
-
-        setCars(resp.data);
+        if (isMounted) {
+          setCars(resp.data);
+        }
       } catch(error) {
         console.log(error)
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false)
+        }
       }
     }
 
     fetchCars();
+
+    return () => {
+      isMounted = false;
+    }
   }, [api]);
 
   return (
