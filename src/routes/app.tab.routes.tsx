@@ -8,9 +8,8 @@ import CarSVG from '../assets/car.svg';
 import PeopleSVG from '../assets/people.svg';
 
 import AppStackRoutes from './app.stack.routes'
-
-import Home from '../screens/Home';
 import MyCars from '../screens/MyCars';
+import Profile from '../screens/Profile';
 
 
 const { Navigator, Screen } = createBottomTabNavigator()
@@ -43,16 +42,6 @@ const AppTabRoutes = () => {
       />
 
       <Screen
-        name="Profile"
-        component={Home}
-        options={{
-          tabBarIcon: (({ color }) => (
-            <PeopleSVG width={24} height={24} fill={color} />
-          ))
-        }}
-      />
-
-      <Screen
         name="MyCars"
         component={MyCars}
         options={{
@@ -61,9 +50,18 @@ const AppTabRoutes = () => {
           ))
         }}
       />
+
+      <Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: (({ color }) => (
+            <PeopleSVG width={24} height={24} fill={color} />
+          ))
+        }}
+      />
     </Navigator>
   )
-
 }
 
 export default AppTabRoutes;
