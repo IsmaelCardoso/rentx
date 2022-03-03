@@ -107,7 +107,7 @@ export const CalendarIcon = styled.View`
   justify-content: center;
   align-items: center;
 
-  border-radius: 5px;
+  border-radius: 2px;
 `;
 
 export const DateInfo = styled.View`

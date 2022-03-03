@@ -28,7 +28,7 @@ export const HeaderTop = styled.View`
 `;
 
 export const HeaderTitle = styled.Text`
-  font-size: ${RFValue(25)};
+  font-size: ${RFValue(25)}px;
   font-family: ${({ theme }) => theme.fonts.secondary_600};
 
   color: ${({ theme }) => theme.colors.background_secondary};
@@ -67,5 +67,5 @@ export const PhotoButton = styled(RectButton)`
   bottom: 10px;
   right: 10px;
 
-  border-radius: 5px;
+  border-radius: 2px;
 `;

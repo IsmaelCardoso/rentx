@@ -11,7 +11,7 @@ export const Container = styled(RectButton)`
  justify-content: center;
  align-items: center;
 
- border-radius: 5px;
+ border-radius: 2px;
 `
 export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.primary_500};

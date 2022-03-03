@@ -12,6 +12,7 @@ interface ITitle {
 
 export const Container = styled(RectButton)<IButton>`
   width: 100%;
+  min-height: 56px;
 
   padding: 19px;
   align-items: center;
@@ -21,7 +22,7 @@ export const Container = styled(RectButton)<IButton>`
     color ? color : theme.colors.main
   };
 
-  border-radius: 5px;
+  border-radius: 2px;
 
   margin-bottom: 8px;
 `

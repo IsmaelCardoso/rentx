@@ -82,7 +82,7 @@ export const Footer = styled.View`
   justify-content: center;
   align-items: center;
 
-  padding: 24px;
+  padding: 16px 24px;
 `;
 
 
