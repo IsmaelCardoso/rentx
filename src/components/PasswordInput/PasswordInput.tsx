@@ -51,6 +51,7 @@ const PasswordInput = ({ iconName, value, ...rest }: IInput) => {
         onFocus={handlerInputFocus}
         onBlur={handlerInputBlur}
         isFocused={isFocused}
+        autoCorrect={false}
       />
 
       <BorderlessButton onPress={handlePasswordVisibilityChange}>
