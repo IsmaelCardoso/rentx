@@ -4,6 +4,7 @@ import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons'
 import { useTheme } from 'styled-components';
+import * as ImagePicker from 'expo-image-picker';
 
 import { useAuth } from '../../hook/auth';
 import BackButton from '../../components/BackButton';
@@ -29,9 +30,13 @@ import {
 type IOption = 'dataEdit' | 'passwordEdit';
 
 const Profile = () => {
-  const [option, setOption] = useState<IOption>('dataEdit');
-
   const { user } = useAuth();
+
+  const [option, setOption] = useState<IOption>('dataEdit');
+  const [avatar, setAvatar] = useState(user.avatar);
+  const [name, setName] = useState(user.name);
+  const [driverLicense, setDriverLicense] = useState(user.driver_license);
+
   const theme = useTheme();
   const navigation = useNavigation();
 
@@ -45,6 +50,25 @@ const Profile = () => {
 
   const handlerOptionChange = (optionSelected: IOption) => {
     setOption(optionSelected);
+  }
+
+  const handleAvatarSelect = async() => {
+    console.log('handleAvatarSelect')
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    })
+
+    if(result.cancelled) {
+      return;
+    }
+
+    if(result.uri) {
+      setAvatar(result.uri);
+    }
   }
 
   return (
@@ -68,9 +92,9 @@ const Profile = () => {
             </HeaderTop>
 
             <PhotoContainer>
-              <Photo source={{ uri: "https://github.com/IsmaelCardoso.png" }} />
+              { !!avatar && <Photo source={{ uri: avatar }} /> }
 
-              <PhotoButton>
+              <PhotoButton onPress={() => handleAvatarSelect()}>
                 <Feather
                   name="camera"
                   size={24}
@@ -109,7 +133,8 @@ const Profile = () => {
                   placeholder="Nome"
                   autoCorrect={false}
                   autoCapitalize="words"
-                  defaultValue={user.name}
+                  defaultValue={name}
+                  onChangeText={setName}
                 />
                 <Input
                   iconName="mail"
@@ -120,7 +145,8 @@ const Profile = () => {
                   iconName="credit-card"
                   placeholder="CNH"
                   keyboardType="numeric"
-                  defaultValue={user.driver_license}
+                  defaultValue={driverLicense}
+                  onChangeText={setDriverLicense}
                 />
               </Section>
               :
