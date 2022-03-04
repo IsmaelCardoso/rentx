@@ -30,7 +30,7 @@ import {
 type IOption = 'dataEdit' | 'passwordEdit';
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   const [option, setOption] = useState<IOption>('dataEdit');
   const [avatar, setAvatar] = useState(user.avatar);
@@ -45,7 +45,7 @@ const Profile = () => {
   }
 
   const handleLogout = () => {
-
+    logout();
   }
 
   const handlerOptionChange = (optionSelected: IOption) => {
