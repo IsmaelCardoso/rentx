@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
+import { Alert, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons'
 import { useTheme } from 'styled-components';
 import * as ImagePicker from 'expo-image-picker';
+import * as Yup from 'yup';
 
 import { useAuth } from '../../hook/auth';
 import BackButton from '../../components/BackButton';
+import Button from '../../components/Button';
 import Input from '../../components/Input';
 import PasswordInput from '../../components/PasswordInput';
 
@@ -29,8 +31,13 @@ import {
 
 type IOption = 'dataEdit' | 'passwordEdit';
 
+const schema = Yup.object().shape({
+  name: Yup.string().required("Nome é obrigatório"),
+  driverLicense: Yup.string().required("CNH é obrigatória"),
+})
+
 const Profile = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, updatedUser } = useAuth();
 
   const [option, setOption] = useState<IOption>('dataEdit');
   const [avatar, setAvatar] = useState(user.avatar);
@@ -44,8 +51,21 @@ const Profile = () => {
     navigation.goBack();
   }
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async() => {
+    Alert.alert(
+      "Tem certeza?",
+      "se você sair vai precisar de internet para conectar-se novamente.",
+    [
+      {
+        text: "cancelar",
+        onPress: () => {},
+        style: "cancel",
+      },
+      {
+        text: "Sair",
+        onPress: () => logout(),
+      }
+    ])
   }
 
   const handlerOptionChange = (optionSelected: IOption) => {
@@ -68,6 +88,32 @@ const Profile = () => {
 
     if(result.uri) {
       setAvatar(result.uri);
+    }
+  }
+
+  const handleProfileUpdate = async() => {
+    try {
+      const data = { name, driverLicense }
+      await schema.validate(data);
+
+      await updatedUser({
+        id: user.id,
+        user_id: user.user_id,
+        email: user.email,
+        name,
+        driver_license: driverLicense,
+        avatar,
+        token: user.token,
+      });
+
+      Alert.alert("Perfil atualizado")
+
+    } catch(error) {
+      if(error instanceof Yup.ValidationError) {
+        Alert.alert('Opa', error.message)
+      } else {
+        Alert.alert('Não foi possivel atualizar o perfil')
+      }
     }
   }
 
@@ -165,6 +211,11 @@ const Profile = () => {
                 />
               </Section>
             }
+
+            <Button
+              title="Salvar alterações"
+              onPress={handleProfileUpdate}
+            />
           </Content>
         </Container>
       </TouchableWithoutFeedback>

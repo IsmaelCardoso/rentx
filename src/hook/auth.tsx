@@ -23,6 +23,7 @@ interface IAuthContextData {
   user: IUser;
   signIn: (credentials: ISigInCredentials) => Promise<void>
   logout: () => Promise<void>
+  updatedUser: (user: IUser) => Promise<void>
 }
 
 interface IAuthProviderProps {
@@ -77,6 +78,25 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
     }
   }
 
+  const updatedUser = async(user: IUser) => {
+    try{
+      const userCollection = await database.get<ModelUser>('users');
+      await database.write(async() => {
+        const currentUser = await userCollection.find(data.id)
+        await currentUser.update((userData) => {
+          userData.name = user.name;
+          userData.driver_license = user.driver_license;
+          userData.avatar = user.avatar;
+        })
+      })
+
+      setData(user);
+
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  }
+
   useEffect(() => {
     async function loadUserData() {
       const userCollection = database.get<ModelUser>('users');
@@ -99,6 +119,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
         user: data,
         signIn,
         logout,
+        updatedUser,
       }}
     >
       {children}
