@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 
 import api from '../services/api';
 import database from '../database'
-import ModelUser from '../database/model/ModelUser'
+import UserModel from '../database/model/UserModel'
 
 interface IUser {
   id: string;
@@ -45,7 +45,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
       const { token, user } = resp.data
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      const userCollection = database.get<ModelUser>('users');
+      const userCollection = database.get<UserModel>('users');
       await database.write(async() => {
         await userCollection.create((newUser) => {
           newUser.user_id = user.id,
@@ -66,7 +66,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
 
   const logout = async() => {
     try{
-      const userCollection = database.get<ModelUser>('users');
+      const userCollection = database.get<UserModel>('users');
       await database.write(async() => {
         const currentUser = await userCollection.find(data.id)
         await currentUser.destroyPermanently();
@@ -80,10 +80,10 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
 
   const updatedUser = async(user: IUser) => {
     try{
-      const userCollection = await database.get<ModelUser>('users');
+      const userCollection = database.get<UserModel>('users');
       await database.write(async() => {
-        const currentUser = await userCollection.find(data.id)
-        await currentUser.update((userData) => {
+        const userSelected = await userCollection.find(user.id)
+        await userSelected.update((userData) => {
           userData.name = user.name;
           userData.driver_license = user.driver_license;
           userData.avatar = user.avatar;
@@ -99,7 +99,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
 
   useEffect(() => {
     async function loadUserData() {
-      const userCollection = database.get<ModelUser>('users');
+      const userCollection = database.get<UserModel>('users');
       const resp = await userCollection.query().fetch();
 
       if (resp.length > 0) {

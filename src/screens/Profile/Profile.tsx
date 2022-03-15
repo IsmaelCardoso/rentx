@@ -59,7 +59,7 @@ const Profile = () => {
       {
         text: "cancelar",
         onPress: () => {},
-        style: "cancel",
+        style: "cancel"
       },
       {
         text: "Sair",
@@ -73,8 +73,6 @@ const Profile = () => {
   }
 
   const handleAvatarSelect = async() => {
-    console.log('handleAvatarSelect')
-
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
