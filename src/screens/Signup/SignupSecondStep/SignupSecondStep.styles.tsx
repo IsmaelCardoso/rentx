@@ -1,13 +1,13 @@
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
-import { RFValue } from 'react-native-responsive-fontsize';
-import styled from 'styled-components/native';
-import theme from '../../../styles/theme';
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
+import { RFValue } from "react-native-responsive-fontsize";
+import styled from "styled-components/native";
+import theme from "../../../styles/theme";
 
 export const Container = styled.View`
   padding: 0 24px;
 
-  background-color: ${({ theme}) => theme.colors.background_primary};
-`
+  background-color: ${({ theme }) => theme.colors.background_primary};
+`;
 export const Header = styled.View`
   width: 100%;
 
@@ -37,5 +37,3 @@ export const FormTitle = styled.Text`
 
   margin-bottom: 24px;
 `;
-
-

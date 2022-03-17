@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native'
-import { StatusBar } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize'
-import { useNetInfo } from '@react-native-community/netinfo';
-import { synchronize } from '@nozbe/watermelondb/sync'
-import database from '../../database'
-import api from '../../services/api'
+import React, { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { StatusBar } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { useNetInfo } from "@react-native-community/netinfo";
+import { synchronize } from "@nozbe/watermelondb/sync";
+import database from "../../database";
+import api from "../../services/api";
 
-import { CarDTO } from '../../dtos/CarDTO';
+import { CarDTO } from "../../dtos/CarDTO";
 
-import LoadAnimated from '../../components/LoadAnimated';
+import LoadAnimated from "../../components/LoadAnimated";
 
-import Logo from '../../assets/logo.svg';
-import Car from '../../components/Car';
+import Logo from "../../assets/logo.svg";
+import Car from "../../components/Car";
 
 import {
-    Container,
-    Header,
-    HeaderContent,
-    TotalCars,
-    CarList,
-} from './home.styles';
-import CarModel from '../../database/model/CarModel';
-import Button from '../../components/Button';
+  Container,
+  Header,
+  HeaderContent,
+  TotalCars,
+  CarList,
+} from "./home.styles";
+import CarModel from "../../database/model/CarModel";
+import Button from "../../components/Button";
 
 const Home = () => {
   const [cars, setCars] = useState<CarModel[]>([]);
@@ -32,28 +32,30 @@ const Home = () => {
   const netInfo = useNetInfo();
 
   const handlerCarDetail = (car: CarDTO) => {
-    navigation.navigate('CarDetails' as never, { car } as never);
-  }
+    navigation.navigate("CarDetails" as never, { car } as never);
+  };
 
-  const offlineSynchronize = async() => {
+  const offlineSynchronize = async () => {
     await synchronize({
       database,
       pullChanges: async ({ lastPulledAt }) => {
-        const { data: { changes, latestVersion } } = await api
-        .get(`cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`);
+        const {
+          data: { changes, latestVersion },
+        } = await api.get(
+          `cars/sync/pull?lastPulledVersion=${lastPulledAt || 0}`
+        );
 
-        console.log("GET.:", changes)
-        return { changes, timestamp: latestVersion }
+        return { changes, timestamp: latestVersion };
       },
-      pushChanges: async({ changes }) => {
+      pushChanges: async ({ changes }) => {
         const user = changes.users;
-        console.log("POST:", user)
-        if(user.updated.length > 0) {
-          await api.post('users/sync', user);
+
+        if (user.updated.length > 0) {
+          await api.post("users/sync", user);
         }
       },
     });
-  }
+  };
 
   useEffect(() => {
     // Esta variavel garante que o estado não será atualizado caso esta interface não esteja mais em execução
@@ -61,17 +63,17 @@ const Home = () => {
 
     async function fetchCars() {
       try {
-        const carCollection = database.get<CarModel>('cars');
+        const carCollection = database.get<CarModel>("cars");
         const cars = await carCollection.query().fetch();
 
         if (isMounted) {
           setCars(cars);
         }
-      } catch(error) {
-        console.log(error)
+      } catch (error) {
+        console.log(error);
       } finally {
         if (isMounted) {
-          setLoading(false)
+          setLoading(false);
         }
       }
     }
@@ -80,48 +82,46 @@ const Home = () => {
 
     return () => {
       isMounted = false;
-    }
+    };
   }, []);
 
   useEffect(() => {
-    if(netInfo.isConnected === true) {
+    if (netInfo.isConnected === true) {
       offlineSynchronize();
     }
-  }, [netInfo.isConnected])
+  }, [netInfo.isConnected]);
 
   return (
     <Container>
-        <StatusBar
-            barStyle="light-content"
-            backgroundColor="transparent"
-            translucent
-        />
-        <Header>
-            <HeaderContent>
-                <Logo
-                    width={RFValue(108)}
-                    height={RFValue(12)}
-                />
-                {
-                  !loading &&
-                  <TotalCars>
-                      Total {cars?.length} carro{cars?.length > 1 && 's'}
-                  </TotalCars>
-                }
-            </HeaderContent>
-        </Header>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+      <Header>
+        <HeaderContent>
+          <Logo width={RFValue(108)} height={RFValue(12)} />
+          {!loading && (
+            <TotalCars>
+              Total {cars?.length} carro{cars?.length > 1 && "s"}
+            </TotalCars>
+          )}
+        </HeaderContent>
+      </Header>
 
-        {loading ? <LoadAnimated /> :
-          <CarList
-              data={cars}
-              renderItem={({ item }: any): JSX.Element =>
-                <Car data={item} onPress={() => handlerCarDetail(item)} />
-              }
-            keyExtractor={(item: CarDTO) => item.id}
-          />
-        }
+      {loading ? (
+        <LoadAnimated />
+      ) : (
+        <CarList
+          data={cars}
+          renderItem={({ item }: any): JSX.Element => (
+            <Car data={item} onPress={() => handlerCarDetail(item)} />
+          )}
+          keyExtractor={(item: CarDTO) => item.id}
+        />
+      )}
     </Container>
   );
-}
+};
 
 export default Home;

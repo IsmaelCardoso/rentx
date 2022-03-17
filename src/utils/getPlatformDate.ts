@@ -1,4 +1,4 @@
-import { addDays } from 'date-fns'
+import { addDays } from "date-fns";
 // import { Platform } from 'react-native'
 
 // const getPlatformDate = (date: Date) => {
@@ -9,6 +9,6 @@ import { addDays } from 'date-fns'
 //   }
 // }
 
-const getPlatformDate = (date: Date) => addDays(date, 1)
+const getPlatformDate = (date: Date) => addDays(date, 1);
 
 export default getPlatformDate;

@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native'
-import { RFValue } from 'react-native-responsive-fontsize';
-import { Alert } from 'react-native';
-import { Feather } from '@expo/vector-icons'
+import React, { useEffect, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { Alert } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
-import { useTheme } from 'styled-components';
-import Accessory from '../../components/Accessory';
-import BackButton from '../../components/BackButton';
-import ImageSlider from '../../components/ImageSlider';
-import Button from '../../components/Button';
+import { useTheme } from "styled-components";
+import Accessory from "../../components/Accessory";
+import BackButton from "../../components/BackButton";
+import ImageSlider from "../../components/ImageSlider";
+import Button from "../../components/Button";
 
-import api from '../../services/api';
+import api from "../../services/api";
 
-import { CarDTO } from '../../dtos/CarDTO';
-import getAccessoryIcon from '../../utils/getAccessoryIcon';
-import getPlatformDate from '../../utils/getPlatformDate';
-import { format } from 'date-fns';
+import { CarDTO } from "../../dtos/CarDTO";
+import getAccessoryIcon from "../../utils/getAccessoryIcon";
+import getPlatformDate from "../../utils/getPlatformDate";
+import { format } from "date-fns";
 
 import {
   Container,
@@ -41,7 +41,7 @@ import {
   RentalPriceQuota,
   RentalPriceTotal,
   Footer,
-} from './SchedulingDetails.styles';
+} from "./SchedulingDetails.styles";
 
 interface IParams {
   car: CarDTO;
@@ -57,11 +57,13 @@ interface IScheduleByCar {
   data: {
     id: string;
     unavailable_dates: string[];
-  }
+  };
 }
 
 const SchedulingDetails = () => {
-  const [rentalPeriod, setRentalPeriod] = useState<IRentalPeriod>({} as IRentalPeriod);
+  const [rentalPeriod, setRentalPeriod] = useState<IRentalPeriod>(
+    {} as IRentalPeriod
+  );
   const [loading, setLoading] = useState(false);
 
   const theme = useTheme();
@@ -69,68 +71,79 @@ const SchedulingDetails = () => {
 
   const route = useRoute();
 
-  const { car, dates } = route.params as IParams
-  const {
-    id,
-    name,
-    rent,
-    photos,
-    brand,
-    accessories,
-  } = car;
+  const { car, dates } = route.params as IParams;
+  const { id, name, rent, photos, brand, accessories } = car;
 
-  const rentTotal = Number(dates.length * Number(rent?.price))
+  const rentTotal = Number(dates.length * Number(rent?.price));
 
-  const handlerSchedulingComplete = async() => {
+  const handlerSchedulingComplete = async () => {
     setLoading(true);
 
-    const scheduleByCar: IScheduleByCar = await api.get(`schedules_bycars/${id}`)
+    const scheduleByCar: IScheduleByCar = await api.get(
+      `schedules_bycars/${id}`
+    );
 
     const unavailable_dates = [
       ...scheduleByCar.data.unavailable_dates,
-      ...dates
-    ]
+      ...dates,
+    ];
 
-    await api.post('schedules_byuser', {
+    await api.post("schedules_byuser", {
       user_id: 2,
       car,
-      startDate: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy'),
-      endDate: format(getPlatformDate(new Date(dates[dates.length - 1])), 'dd/MM/yyyy'),
+      startDate: format(getPlatformDate(new Date(dates[0])), "dd/MM/yyyy"),
+      endDate: format(
+        getPlatformDate(new Date(dates[dates.length - 1])),
+        "dd/MM/yyyy"
+      ),
     });
 
-    await api.put(`schedules_bycars/${id}`, {
-      id,
-      unavailable_dates
-    })
-    .then(resp => navigation.navigate('Confirmation' as never, {
-      title: "Carro Alugado!",
-      message: `Agora você só precisa ir\naté a concessionária a RENTX\npegar o seu automóvel.`,
-      nextScreenRoute: "Home",
-    } as never))
-    .catch((error) => {
-      setLoading(false);
-      Alert.alert(
-      "Atenção",
-      "Não foi possivel realizar o agendamento, por favor tente novamente"
-    )})
-  }
+    await api
+      .put(`schedules_bycars/${id}`, {
+        id,
+        unavailable_dates,
+      })
+      .then((resp) =>
+        navigation.navigate(
+          "Confirmation" as never,
+          {
+            title: "Carro Alugado!",
+            message: `Agora você só precisa ir\naté a concessionária a RENTX\npegar o seu automóvel.`,
+            nextScreenRoute: "Home",
+          } as never
+        )
+      )
+      .catch((error) => {
+        setLoading(false);
+        Alert.alert(
+          "Atenção",
+          "Não foi possivel realizar o agendamento, por favor tente novamente"
+        );
+      });
+  };
 
   const handlerGoBack = () => {
     navigation.goBack();
-  }
+  };
 
   const handlerDateFormat = () => {
-    if(dates.length > 0) {
-      const startFormatted = format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyyy')
-      const endFormatted = format(getPlatformDate(new Date(dates[dates.length - 1])), 'dd/MM/yyyy')
+    if (dates.length > 0) {
+      const startFormatted = format(
+        getPlatformDate(new Date(dates[0])),
+        "dd/MM/yyyy"
+      );
+      const endFormatted = format(
+        getPlatformDate(new Date(dates[dates.length - 1])),
+        "dd/MM/yyyy"
+      );
 
-      setRentalPeriod({ startFormatted, endFormatted })
+      setRentalPeriod({ startFormatted, endFormatted });
     }
-  }
+  };
 
   useEffect(() => {
     handlerDateFormat();
-  }, [])
+  }, []);
 
   return (
     <Container>
@@ -156,19 +169,19 @@ const SchedulingDetails = () => {
         </Details>
 
         <Accessories>
-          {accessories?.map((accessory) =>
+          {accessories?.map((accessory) => (
             <Accessory
               key={accessory?.type}
               name={accessory?.name}
               icon={getAccessoryIcon(accessory?.type)}
             />
-          )}
+          ))}
         </Accessories>
 
         <RentalPeriod>
           <CalendarIcon>
             <Feather
-              name='calendar'
+              name="calendar"
               size={RFValue(24)}
               color={theme.colors.shape}
             />
@@ -180,7 +193,7 @@ const SchedulingDetails = () => {
           </DateInfo>
 
           <Feather
-            name='chevron-right'
+            name="chevron-right"
             size={RFValue(10)}
             color={theme.colors.text}
           />
@@ -213,6 +226,6 @@ const SchedulingDetails = () => {
       </Footer>
     </Container>
   );
-}
+};
 
 export default SchedulingDetails;

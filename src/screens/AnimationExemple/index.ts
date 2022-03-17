@@ -1,1 +1,1 @@
-export { default } from './SplashExemple';
+export { default } from "./AnimationExemple";

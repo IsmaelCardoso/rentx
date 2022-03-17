@@ -1,1 +1,1 @@
-export { default } from './Bullets'
+export { default } from "./Bullets";

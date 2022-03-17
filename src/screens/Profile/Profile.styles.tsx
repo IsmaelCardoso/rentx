@@ -1,7 +1,10 @@
-import styled, { css } from 'styled-components/native';
-import { BorderlessButton, TouchableOpacity } from 'react-native-gesture-handler';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
-import { RFValue } from 'react-native-responsive-fontsize';
+import styled, { css } from "styled-components/native";
+import {
+  BorderlessButton,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
+import { RFValue } from "react-native-responsive-fontsize";
 
 interface IOptionPros {
   active: boolean;
@@ -9,7 +12,7 @@ interface IOptionPros {
 
 export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.background_primary};
-`
+`;
 export const Header = styled.View`
   width: 100%;
   height: 227px;
@@ -55,7 +58,6 @@ export const Photo = styled.Image`
   height: 180px;
 
   border-radius: 90px;
-
 `;
 
 export const PhotoButton = styled.TouchableOpacity`
@@ -92,18 +94,21 @@ export const Options = styled.View`
 export const Option = styled.TouchableOpacity<IOptionPros>`
   padding-bottom: 14px;
 
-  ${({ active }) => active && css`
-    border-bottom-width: 3px;
-    border-bottom-color: ${({ theme }) => theme.colors.main};
-  ` }
+  ${({ active }) =>
+    active &&
+    css`
+      border-bottom-width: 3px;
+      border-bottom-color: ${({ theme }) => theme.colors.main};
+    `}
 `;
 
 export const OptionTitle = styled.Text<IOptionPros>`
   font-size: ${RFValue(20)}px;
-  font-family: ${({ theme, active }) => active ? theme.fonts.secondary_600 : theme.fonts.secondary_500};
+  font-family: ${({ theme, active }) =>
+    active ? theme.fonts.secondary_600 : theme.fonts.secondary_500};
 
-  color: ${({ theme, active }) => active ? theme.colors.header : theme.colors.text_detail};
+  color: ${({ theme, active }) =>
+    active ? theme.colors.header : theme.colors.text_detail};
 `;
 
 export const Section = styled.View``;
-

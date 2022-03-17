@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { StatusBar, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native'
-import { useTheme } from 'styled-components'
-import { AntDesign } from '@expo/vector-icons'
+import React, { useEffect, useState } from "react";
+import { StatusBar, FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "styled-components";
+import { AntDesign } from "@expo/vector-icons";
 
-import BackButton from '../../components/BackButton';
-import Car from '../../components/Car';
-import LoadAnimated from '../../components/LoadAnimated';
+import BackButton from "../../components/BackButton";
+import Car from "../../components/Car";
+import LoadAnimated from "../../components/LoadAnimated";
 
-import { CarDTO } from '../../dtos/CarDTO';
-import api from '../../services/api';
+import { CarDTO } from "../../dtos/CarDTO";
+import api from "../../services/api";
 
 import {
   Container,
@@ -25,7 +25,7 @@ import {
   CarFooterTitle,
   CarFooterPeriod,
   CarFooterDate,
- } from './MyCars.styles';
+} from "./MyCars.styles";
 
 interface IUserCar {
   id: string;
@@ -44,15 +44,15 @@ const MyCars = () => {
 
   const handlerGoBack = () => {
     navigation.goBack();
-  }
+  };
 
   useEffect(() => {
     async function fetchCars() {
       try {
         const resp = await api.get(`schedules_byuser?user_id=2`);
 
-        setUserCars(resp.data)
-      } catch(error) {
+        setUserCars(resp.data);
+      } catch (error) {
         console.log(error);
       } finally {
         setLoading(false);
@@ -60,7 +60,7 @@ const MyCars = () => {
     }
 
     fetchCars();
-  }, [])
+  }, []);
 
   return (
     <Container>
@@ -70,38 +70,32 @@ const MyCars = () => {
           translucent
           backgroundColor="transparent"
         />
-        <BackButton
-          onPress={handlerGoBack}
-          color={theme.colors.shape}
-        />
+        <BackButton onPress={handlerGoBack} color={theme.colors.shape} />
 
         <Title>
-          Seus agendamentos, {'\n'}
+          Seus agendamentos, {"\n"}
           estão aqui.
         </Title>
 
-        <SubTitle>
-          Conforto, segurança e praticidade.
-        </SubTitle>
+        <SubTitle>Conforto, segurança e praticidade.</SubTitle>
       </Header>
 
-      {loading ?
-        <LoadAnimated /> :
+      {loading ? (
+        <LoadAnimated />
+      ) : (
         <Content>
           <Appointments>
             <AppointmentsTitle>Agendamentos realizados</AppointmentsTitle>
             <AppointmentsQuantity>
-              {
-                `${userCars.length < 10 && '0'}${userCars.length || '0'}`
-              }
-              </AppointmentsQuantity>
+              {`${userCars.length < 10 && "0"}${userCars.length || "0"}`}
+            </AppointmentsQuantity>
           </Appointments>
 
           <FlatList
             data={userCars}
-            renderItem={({ item }): JSX.Element =>
+            renderItem={({ item }): JSX.Element => (
               <CarWapper>
-                <Car data={item.car} onPress={() => {}}/>
+                <Car data={item.car} onPress={() => {}} />
                 <CarFooter>
                   <CarFooterTitle>Período</CarFooterTitle>
 
@@ -117,14 +111,14 @@ const MyCars = () => {
                   </CarFooterPeriod>
                 </CarFooter>
               </CarWapper>
-            }
+            )}
             keyExtractor={(item: IUserCar) => item.id}
             showsVerticalScrollIndicator={false}
           />
         </Content>
-      }
+      )}
     </Container>
   );
-}
+};
 
 export default MyCars;

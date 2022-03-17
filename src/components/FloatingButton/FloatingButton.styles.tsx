@@ -1,5 +1,5 @@
-import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
-import styled from 'styled-components/native';
+import { RectButton, RectButtonProps } from "react-native-gesture-handler";
+import styled from "styled-components/native";
 
 interface IContainer {
   background?: string;
@@ -10,8 +10,7 @@ export const Container = styled(RectButton)<IContainer>`
   height: 60px;
 
   background-color: ${({ theme, background }) =>
-    background ? background : theme.colors.main
-  };
+    background ? background : theme.colors.main};
 
   border-radius: 30px;
 

@@ -3,5 +3,5 @@ export {
   CalendarProps,
   IDayProps,
   generateInterval,
-  MarkedDatesType
-} from "./Calendar"
+  MarkedDatesType,
+} from "./Calendar";

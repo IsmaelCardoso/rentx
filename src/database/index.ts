@@ -1,21 +1,17 @@
-import { Database } from '@nozbe/watermelondb'
-import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
+import { Database } from "@nozbe/watermelondb";
+import SQLiteAdapter from "@nozbe/watermelondb/adapters/sqlite";
 
-import schemas from './schema';
-import UserModel from './model/UserModel'
-import CarModel from './model/CarModel'
+import schemas from "./schema";
+import UserModel from "./model/UserModel";
+import CarModel from "./model/CarModel";
 
 const adapter = new SQLiteAdapter({
-  schema: schemas
+  schema: schemas,
 });
 
 const database = new Database({
   adapter,
-  modelClasses: [
-    UserModel,
-    CarModel,
-  ],
+  modelClasses: [UserModel, CarModel],
 });
 
 export default database;
-

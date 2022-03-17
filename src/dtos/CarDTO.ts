@@ -1,4 +1,4 @@
-export interface IAccessories{
+export interface IAccessories {
   name: string;
   type: string;
 }
@@ -17,5 +17,5 @@ export interface CarDTO {
   photos: IPhotos[];
   period: string;
   price: string;
-  thumbnail: string
+  thumbnail: string;
 }

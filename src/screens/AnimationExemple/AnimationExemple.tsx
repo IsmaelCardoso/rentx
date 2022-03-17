@@ -1,17 +1,17 @@
-import React from 'react';
-import { StyleSheet, Dimensions } from 'react-native'
+import React from "react";
+import { StyleSheet, Dimensions } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
   Easing,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
 
-import Button from '../../components/Button';
+import Button from "../../components/Button";
 
-import { Container } from './AnimationExemple.styles';
+import { Container } from "./AnimationExemple.styles";
 
-const WIDTH = Dimensions.get('window').width;
+const WIDTH = Dimensions.get("window").width;
 
 const AnimationExemple = () => {
   const animation = useSharedValue(0);
@@ -22,25 +22,26 @@ const AnimationExemple = () => {
         {
           translateX: withTiming(animation.value, {
             duration: 3000,
-            easing: Easing.bezier(0,1.49,1,-0.53),
+            easing: Easing.bezier(0, 1.49, 1, -0.53),
             //.bizer é personalizado e podemos obter o cod apartir do site: https://cubic-bezier.com/
-          })
-      }]
-    }
-  })
+          }),
+        },
+      ],
+    };
+  });
 
   const handlerAnimationPosition = () => {
     animation.value = Math.random() * (WIDTH - 100);
-  }
+  };
 
   return (
     <Container>
-      <Animated.View style={[style.box, animatedStyle]}/>
+      <Animated.View style={[style.box, animatedStyle]} />
 
-      <Button title="Mover" color="brown" onPress={handlerAnimationPosition}/>
+      <Button title="Mover" color="brown" onPress={handlerAnimationPosition} />
     </Container>
   );
-}
+};
 
 export default AnimationExemple;
 
@@ -49,6 +50,6 @@ const style = StyleSheet.create({
     width: 100,
     height: 100,
 
-    backgroundColor: 'red',
-  }
-})
+    backgroundColor: "red",
+  },
+});

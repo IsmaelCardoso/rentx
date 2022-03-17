@@ -1,46 +1,45 @@
-import React from 'react';
-import { MarkingProps } from 'react-native-calendars/src/calendar/day/marking';
-import { Feather } from "@expo/vector-icons"
-import { useTheme } from "styled-components"
+import React from "react";
+import { MarkingProps } from "react-native-calendars/src/calendar/day/marking";
+import { Feather } from "@expo/vector-icons";
+import { useTheme } from "styled-components";
 
-import { ptBR } from './localeConfig';
-import generateInterval from './generateInterval'
+import { ptBR } from "./localeConfig";
+import generateInterval from "./generateInterval";
 
 import {
   Calendar as CustomCalendar,
   LocaleConfig,
   CalendarProps,
- } from 'react-native-calendars';
+} from "react-native-calendars";
 
- LocaleConfig.locales['pt-br'] = ptBR
+LocaleConfig.locales["pt-br"] = ptBR;
 
- LocaleConfig.defaultLocale = 'pt-br';
+LocaleConfig.defaultLocale = "pt-br";
 
- interface IDayProps {
+interface IDayProps {
   dateString: string;
   day: number;
   month: number;
   year: number;
   timestamp: number;
- }
+}
 
- interface MarkedDatesType {
+interface MarkedDatesType {
   [key: string]: MarkingProps;
-};
+}
 
 const Calendar = ({ markedDates, onDayPress }: CalendarProps) => {
   const theme = useTheme();
 
   return (
     <CustomCalendar
-      renderArrow={(direction) =>
+      renderArrow={(direction) => (
         <Feather
           size={24}
           color={theme.colors.text}
-          name={direction == "left" ? "chevron-left" : 'chevron-right'}
+          name={direction == "left" ? "chevron-left" : "chevron-right"}
         />
-      }
-
+      )}
       headerStyle={{
         backgroundColor: theme.colors.background_secondary,
         borderBottomWidth: 0.6,
@@ -48,7 +47,6 @@ const Calendar = ({ markedDates, onDayPress }: CalendarProps) => {
         paddingBottom: 10,
         marginBottom: 10,
       }}
-
       theme={{
         textDayFontFamily: theme.fonts.primary_400,
         textDayHeaderFontFamily: theme.fonts.primary_500,
@@ -58,22 +56,20 @@ const Calendar = ({ markedDates, onDayPress }: CalendarProps) => {
         monthTextColor: theme.colors.title,
         arrowStyle: {
           marginHorizontal: -15,
-        }
+        },
       }}
-
       firstDay={1}
-
       minDate={String(new Date())}
-      markingType='period'
+      markingType="period"
       markedDates={markedDates}
       onDayPress={onDayPress}
     />
-  )
-}
+  );
+};
 export {
   Calendar,
   CalendarProps,
   IDayProps,
   generateInterval,
   MarkedDatesType,
-}
+};

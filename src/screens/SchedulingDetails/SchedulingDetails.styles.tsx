@@ -1,31 +1,31 @@
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
-import { RFValue } from 'react-native-responsive-fontsize';
-import styled from 'styled-components/native';
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
+import { RFValue } from "react-native-responsive-fontsize";
+import styled from "styled-components/native";
 
 export const Container = styled.View`
-    flex: 1;
-    background-color: ${({ theme }) => theme.colors.background_secondary};
-`
+  flex: 1;
+  background-color: ${({ theme }) => theme.colors.background_secondary};
+`;
 export const Header = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-    position: absolute;
-    margin-top: ${getStatusBarHeight() + 18}px;
-    margin-left: 24px;
+  position: absolute;
+  margin-top: ${getStatusBarHeight() + 18}px;
+  margin-left: 24px;
 `;
 
 export const CarImageContainer = styled.View`
-    margin-top: ${getStatusBarHeight() + 32}px;
+  margin-top: ${getStatusBarHeight() + 32}px;
 `;
 
 export const Content = styled.ScrollView.attrs({
-    contentContainerStyle: {
-        padding: 24,
-        alignItems: 'center',
-    },
-    showsVerticalIndicator: false,
+  contentContainerStyle: {
+    padding: 24,
+    alignItems: "center",
+  },
+  showsVerticalIndicator: false,
 })``;
 
 export const Details = styled.View`
@@ -80,7 +80,6 @@ export const Accessories = styled.View`
   align-items: center;
   justify-content: space-between;
   margin-top: 23px;
-
 `;
 
 export const RentalPeriod = styled.View`
@@ -112,7 +111,6 @@ export const CalendarIcon = styled.View`
 
 export const DateInfo = styled.View`
   width: 30%;
-
 `;
 
 export const DateTitle = styled.Text`
@@ -132,7 +130,6 @@ export const DateValue = styled.Text`
 export const RentalPrice = styled.View`
   width: 100%;
   margin-top: 16px;
-
 `;
 
 export const RentalPriceLabel = styled.Text`
@@ -162,7 +159,6 @@ export const RentalPriceTotal = styled.Text`
   color: ${({ theme }) => theme.colors.success};
   font-size: ${RFValue(24)}px;
 `;
-
 
 export const Footer = styled.View`
   width: 100%;

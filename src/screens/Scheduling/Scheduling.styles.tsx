@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components/native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import styled, { css } from "styled-components/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
 interface IDateValue {
   selected?: boolean;
@@ -10,8 +10,7 @@ export const Container = styled.View`
   flex: 1;
 
   background-color: ${({ theme }) => theme.colors.background_secondary};
-
-`
+`;
 export const Header = styled.View`
   width: 100%;
   height: 325px;
@@ -44,7 +43,6 @@ export const RentalPeriod = styled.View`
 
 export const DateInfo = styled.View`
   width: 30%;
-
 `;
 
 export const DateTitle = styled.Text`
@@ -58,12 +56,14 @@ export const DateValue = styled.Text<IDateValue>`
   font-family: ${({ theme }) => theme.fonts.primary_500};
   font-size: ${RFValue(15)}px;
 
-  ${({ selected, theme }) => !selected && css`
-    border-bottom-width: 1px;
-    border-bottom-color: ${({ theme }) => theme.colors.text};
+  ${({ selected, theme }) =>
+    !selected &&
+    css`
+      border-bottom-width: 1px;
+      border-bottom-color: ${({ theme }) => theme.colors.text};
 
-    padding-bottom: 5px;
-  `}
+      padding-bottom: 5px;
+    `}
 `;
 
 export const Content = styled.ScrollView.attrs({
@@ -84,5 +84,3 @@ export const Footer = styled.View`
 
   padding: 16px 24px;
 `;
-
-

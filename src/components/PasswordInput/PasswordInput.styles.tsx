@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components/native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { TextInput } from 'react-native';
+import styled, { css } from "styled-components/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { TextInput } from "react-native";
 
 interface IProps {
   isFocused: boolean;
@@ -10,7 +10,7 @@ export const Container = styled.View`
   flex-direction: row;
 
   margin-bottom: 8px;
-`
+`;
 
 export const IconContainer = styled.View<IProps>`
   width: 55px;
@@ -23,10 +23,12 @@ export const IconContainer = styled.View<IProps>`
 
   margin-right: 2px;
 
-  ${({ isFocused, theme }) => isFocused && css`
-    border-bottom-width: 2px;
-    border-bottom-color: ${theme.colors.main};
-  `}
+  ${({ isFocused, theme }) =>
+    isFocused &&
+    css`
+      border-bottom-width: 2px;
+      border-bottom-color: ${theme.colors.main};
+    `}
 `;
 
 export const InputText = styled(TextInput)<IProps>`
@@ -40,8 +42,10 @@ export const InputText = styled(TextInput)<IProps>`
 
   padding: 0 23px;
 
-  ${({ isFocused, theme }) => isFocused && css`
-    border-bottom-width: 2px;
-    border-bottom-color: ${theme.colors.main};
-  `}
+  ${({ isFocused, theme }) =>
+    isFocused &&
+    css`
+      border-bottom-width: 2px;
+      border-bottom-color: ${theme.colors.main};
+    `}
 `;

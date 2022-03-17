@@ -1,9 +1,9 @@
-import React from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native'
-import { useWindowDimensions, StatusBar } from 'react-native'
+import React from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useWindowDimensions, StatusBar } from "react-native";
 
-import LogoSvg from '../../assets/logo_background_gray.svg'
-import DoneSvg from '../../assets/done.svg'
+import LogoSvg from "../../assets/logo_background_gray.svg";
+import DoneSvg from "../../assets/done.svg";
 
 import {
   Container,
@@ -11,13 +11,13 @@ import {
   Title,
   Message,
   Footer,
- } from './Confirmation.styles';
-import ConfirmButton from '../../components/ConfirmButton';
+} from "./Confirmation.styles";
+import ConfirmButton from "../../components/ConfirmButton";
 
 interface IParams {
-  title: string,
-  message: string,
-  nextScreenRoute: string,
+  title: string;
+  message: string;
+  nextScreenRoute: string;
 }
 
 const Confirmation = () => {
@@ -28,9 +28,9 @@ const Confirmation = () => {
 
   const { title, message, nextScreenRoute } = route.params as IParams;
 
-  const handlerGoToHome= () => {
-    navigation.navigate(nextScreenRoute as never)
-  }
+  const handlerGoToHome = () => {
+    navigation.navigate(nextScreenRoute as never);
+  };
 
   // {
   //   title: 'Carro Alugado',
@@ -40,12 +40,12 @@ const Confirmation = () => {
   return (
     <Container>
       <StatusBar
-        barStyle='light-content'
+        barStyle="light-content"
         translucent
         backgroundColor="transparent"
       />
 
-      <LogoSvg width={width}/>
+      <LogoSvg width={width} />
 
       <Content>
         <DoneSvg width={80} height={80} />
@@ -55,10 +55,10 @@ const Confirmation = () => {
       </Content>
 
       <Footer>
-        <ConfirmButton title='OK' onPress={handlerGoToHome} />
+        <ConfirmButton title="OK" onPress={handlerGoToHome} />
       </Footer>
     </Container>
   );
-}
+};
 
 export default Confirmation;
