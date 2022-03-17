@@ -66,7 +66,7 @@ export const AppointmentsQuantity = styled.Text`
   font-size: ${RFValue(15)}px;
 `;
 
-export const CarWapper = styled.View`
+export const CarWrapper = styled.View`
   margin-bottom: 16px;
 `;
 

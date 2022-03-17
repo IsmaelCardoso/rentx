@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StatusBar, FlatList } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
+import { format, parseISO } from "date-fns";
 import { useTheme } from "styled-components";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -8,7 +9,7 @@ import BackButton from "../../components/BackButton";
 import Car from "../../components/Car";
 import LoadAnimated from "../../components/LoadAnimated";
 
-import { CarDTO } from "../../dtos/CarDTO";
+import CarModel from "../../database/model/CarModel";
 import api from "../../services/api";
 
 import {
@@ -20,27 +21,27 @@ import {
   Appointments,
   AppointmentsTitle,
   AppointmentsQuantity,
-  CarWapper,
+  CarWrapper,
   CarFooter,
   CarFooterTitle,
   CarFooterPeriod,
   CarFooterDate,
 } from "./MyCars.styles";
 
-interface IUserCar {
+interface DataProps {
   id: string;
-  user_id: string;
-  car: CarDTO;
-  startDate: string;
-  endDate: string;
+  car: CarModel;
+  start_date: string;
+  end_date: string;
 }
 
 const MyCars = () => {
-  const [userCars, setUserCars] = useState<IUserCar[]>([] as IUserCar[]);
+  const [userCars, setUserCars] = useState<DataProps[]>([] as DataProps[]);
   const [loading, setLoading] = useState(true);
 
   const theme = useTheme();
   const navigation = useNavigation();
+  const screenIsFocus = useIsFocused(); // useIsFocused é um boolean que informa se estou na screen
 
   const handlerGoBack = () => {
     navigation.goBack();
@@ -49,9 +50,17 @@ const MyCars = () => {
   useEffect(() => {
     async function fetchCars() {
       try {
-        const resp = await api.get(`schedules_byuser?user_id=2`);
+        const resp = await api.get(`rentals`);
+        const dataFormatted = resp.data.map((data: DataProps) => {
+          return {
+            id: data.id,
+            car: data.car,
+            start_date: format(parseISO(data.start_date), "dd/MM/yyyy"),
+            end_date: format(parseISO(data.end_date), "dd/MM/yyyy"),
+          };
+        });
 
-        setUserCars(resp.data);
+        setUserCars(dataFormatted);
       } catch (error) {
         console.log(error);
       } finally {
@@ -60,7 +69,7 @@ const MyCars = () => {
     }
 
     fetchCars();
-  }, []);
+  }, [screenIsFocus]);
 
   return (
     <Container>
@@ -93,27 +102,27 @@ const MyCars = () => {
 
           <FlatList
             data={userCars}
+            keyExtractor={(item: DataProps) => item.id}
+            showsVerticalScrollIndicator={false}
             renderItem={({ item }): JSX.Element => (
-              <CarWapper>
+              <CarWrapper>
                 <Car data={item.car} onPress={() => {}} />
                 <CarFooter>
                   <CarFooterTitle>Período</CarFooterTitle>
 
                   <CarFooterPeriod>
-                    <CarFooterDate>{item.startDate}</CarFooterDate>
+                    <CarFooterDate>{item.start_date}</CarFooterDate>
                     <AntDesign
                       name="arrowright"
                       size={20}
                       color={theme.colors.title}
                       style={{ marginHorizontal: 10 }}
                     />
-                    <CarFooterDate>{item.endDate}</CarFooterDate>
+                    <CarFooterDate>{item.end_date}</CarFooterDate>
                   </CarFooterPeriod>
                 </CarFooter>
-              </CarWapper>
+              </CarWrapper>
             )}
-            keyExtractor={(item: IUserCar) => item.id}
-            showsVerticalScrollIndicator={false}
           />
         </Content>
       )}
