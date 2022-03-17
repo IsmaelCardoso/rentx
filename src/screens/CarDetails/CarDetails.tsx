@@ -1,11 +1,24 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'
-import Accessory from '../../components/Accessory';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue
+} from 'react-native-reanimated';
 
+import Accessory from '../../components/Accessory';
+import Button from '../../components/Button';
 import BackButton from '../../components/BackButton';
 import ImageSlider from '../../components/ImageSlider';
 
 import getAccessoryIcon from '../../utils/getAccessoryIcon'
+
+import CarModel from '../../database/model/CarModel';
+import { CarDTO } from '../../dtos/CarDTO';
 
 import {
     Container,
@@ -21,17 +34,6 @@ import {
     About,
     Footer,
 } from './CarDetails.styles';
-import Button from '../../components/Button';
-import { CarDTO } from '../../dtos/CarDTO';
-import Animated, {
-  Extrapolate,
-  interpolate,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useSharedValue
-} from 'react-native-reanimated';
-import { StatusBar } from 'react-native';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 interface IParams {
   car: CarDTO;
@@ -133,7 +135,7 @@ const CarDetails = () => {
         </Details>
 
         <Accessories>
-          {accessories.map((accessory) =>
+          {accessories?.map((accessory) =>
             <Accessory
               key={accessory.type}
               name={accessory.name}

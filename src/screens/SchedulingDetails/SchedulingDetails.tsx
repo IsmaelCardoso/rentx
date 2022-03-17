@@ -79,7 +79,7 @@ const SchedulingDetails = () => {
     accessories,
   } = car;
 
-  const rentTotal = Number(dates.length * Number(rent.price))
+  const rentTotal = Number(dates.length * Number(rent?.price))
 
   const handlerSchedulingComplete = async() => {
     setLoading(true);
@@ -150,17 +150,17 @@ const SchedulingDetails = () => {
           </Description>
 
           <Rent>
-            <Period>{rent.period}</Period>
-            <Price>R$ {rent.price}</Price>
+            <Period>{rent?.period}</Period>
+            <Price>R$ {rent?.price}</Price>
           </Rent>
         </Details>
 
         <Accessories>
-          {accessories.map((accessory) =>
+          {accessories?.map((accessory) =>
             <Accessory
-              key={accessory.type}
-              name={accessory.name}
-              icon={getAccessoryIcon(accessory.type)}
+              key={accessory?.type}
+              name={accessory?.name}
+              icon={getAccessoryIcon(accessory?.type)}
             />
           )}
         </Accessories>
@@ -176,7 +176,7 @@ const SchedulingDetails = () => {
 
           <DateInfo>
             <DateTitle>DE</DateTitle>
-            <DateValue>{rentalPeriod.startFormatted}</DateValue>
+            <DateValue>{rentalPeriod?.startFormatted}</DateValue>
           </DateInfo>
 
           <Feather
@@ -187,7 +187,7 @@ const SchedulingDetails = () => {
 
           <DateInfo>
             <DateTitle>ATÉ</DateTitle>
-            <DateValue>{rentalPeriod.endFormatted}</DateValue>
+            <DateValue>{rentalPeriod?.endFormatted}</DateValue>
           </DateInfo>
         </RentalPeriod>
 
@@ -195,7 +195,7 @@ const SchedulingDetails = () => {
           <RentalPriceLabel>Total</RentalPriceLabel>
           <RentalPriceDetail>
             <RentalPriceQuota>
-              {`R$ ${rent.price} x${dates.length} diária`}
+              {`R$ ${rent?.price} x${dates?.length} diária`}
             </RentalPriceQuota>
             <RentalPriceTotal>R$ {rentTotal}</RentalPriceTotal>
           </RentalPriceDetail>

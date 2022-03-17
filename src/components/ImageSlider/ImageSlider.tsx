@@ -36,7 +36,7 @@ const ImageSlider = ({ imagesUrl }: IImages) => {
   return (
       <Container>
         <ImageIndexs>
-          {imagesUrl.map((item, idx) => (
+          {imagesUrl?.map((item, idx) => (
             <Bullets
               key={item.id}
               active={imageIdx === idx}
