@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar } from "react-native";
+import { Platform, StatusBar } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { useNetInfo } from "@react-native-community/netinfo";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 import Animated, {
   Extrapolate,
@@ -83,7 +84,7 @@ const CarDetails = () => {
 
   useEffect(() => {
     const fetchCarUpdated = async () => {
-      const resp = await api.get(`/car/${car.id}`);
+      const resp = await api.get(`/cars/${car.id}`);
 
       setCarUpdated(resp.data);
     };
@@ -158,7 +159,11 @@ const CarDetails = () => {
         <About>{about}</About>
       </Animated.ScrollView>
 
-      <Footer>
+      <Footer
+        style={{
+          paddingBottom: Platform.OS === "ios" ? useBottomTabBarHeight() : 24,
+        }}
+      >
         <Button
           title="Escolher período de aluguel"
           onPress={handlerConfirmRental}

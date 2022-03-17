@@ -1,6 +1,6 @@
-import { getStatusBarHeight } from "react-native-iphone-x-helper";
-import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
 export const Container = styled.View`
   flex: 1;
@@ -85,7 +85,7 @@ export const Footer = styled.View`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.background_secondary};
 
-  padding: 24px 24px ${getStatusBarHeight() + 24}px;
+  padding: 24px 24px;
 `;
 
 export const OfflineInfo = styled.Text`
