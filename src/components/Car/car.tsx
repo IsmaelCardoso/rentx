@@ -1,34 +1,38 @@
-import React from 'react';
-import { RectButtonProps } from 'react-native-gesture-handler';
+import React from "react";
+import { RectButtonProps } from "react-native-gesture-handler";
+import { useNetInfo } from "@react-native-community/netinfo";
 
-import CarModel from '../../database/model/CarModel';
+import CarModel from "../../database/model/CarModel";
 
-import getAccessoryIcon from '../../utils/getAccessoryIcon';
+import getAccessoryIcon from "../../utils/getAccessoryIcon";
 
 import {
-    Container,
-    Details,
-    Brand,
-    Name,
-    About,
-    Rent,
-    Period,
-    Price,
-    Type,
-    CarImage,
-} from './car.styles';
+  Container,
+  Details,
+  Brand,
+  Name,
+  About,
+  Rent,
+  Period,
+  Price,
+  Type,
+  CarImage,
+} from "./car.styles";
 
 interface Props extends RectButtonProps {
-    data: CarModel;
+  data: CarModel;
 }
 
-const Car = ({ data, ...rest }: Props) => {
-  const { brand, name, period, price, thumbnail, fuel_type } = data
+const Car = ({
+  data: { brand, name, period, price, thumbnail, fuel_type },
+  ...rest
+}: Props) => {
+  const netInfo = useNetInfo();
 
   const MotorIcon = getAccessoryIcon(fuel_type);
 
   return (
-    <Container { ...rest }>
+    <Container {...rest}>
       <Details>
         <Brand>{brand}</Brand>
         <Name>{name}</Name>
@@ -36,7 +40,7 @@ const Car = ({ data, ...rest }: Props) => {
         <About>
           <Rent>
             <Period>{period}</Period>
-            <Price>{`R$${price}`}</Price>
+            <Price>R$ {netInfo.isConnected === true ? price : "..."}</Price>
           </Rent>
 
           <Type>
@@ -45,11 +49,8 @@ const Car = ({ data, ...rest }: Props) => {
         </About>
       </Details>
 
-      <CarImage
-          source={{ uri: thumbnail }}
-          resizeMode='contain'
-      />
+      <CarImage source={{ uri: thumbnail }} resizeMode="contain" />
     </Container>
   );
-}
+};
 export default Car;

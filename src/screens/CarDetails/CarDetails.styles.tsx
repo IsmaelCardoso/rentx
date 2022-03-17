@@ -1,19 +1,19 @@
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
-import { RFValue } from 'react-native-responsive-fontsize';
-import styled from 'styled-components/native';
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
+import { RFValue } from "react-native-responsive-fontsize";
+import styled from "styled-components/native";
 
 export const Container = styled.View`
-    flex: 1;
-    background-color: ${({ theme }) => theme.colors.background_secondary};
-`
+  flex: 1;
+  background-color: ${({ theme }) => theme.colors.background_secondary};
+`;
 export const Header = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-    position: absolute;
-    margin-top: ${getStatusBarHeight() + 18}px;
-    margin-left: 24px;
+  position: absolute;
+  margin-top: ${getStatusBarHeight() + 18}px;
+  margin-left: 24px;
 `;
 
 export const Details = styled.View`
@@ -68,7 +68,6 @@ export const Accessories = styled.View`
   align-items: center;
   justify-content: space-between;
   margin-top: 23px;
-
 `;
 
 export const About = styled.Text`
@@ -87,4 +86,12 @@ export const Footer = styled.View`
   background-color: ${({ theme }) => theme.colors.background_secondary};
 
   padding: 24px 24px ${getStatusBarHeight() + 24}px;
+`;
+
+export const OfflineInfo = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary_400};
+  color: ${({ theme }) => theme.colors.main};
+  font-size: ${RFValue(10)}px;
+
+  text-align: center;
 `;
